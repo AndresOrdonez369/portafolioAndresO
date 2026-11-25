@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Signal Path</title>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Martian+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0}
+body{width:1440px;height:900px;overflow:hidden;background:#070b09;color:#e6f2ea;font-family:"Martian Mono",monospace;position:relative}
+.board{position:absolute;inset:0;perspective:1600px}
+.plane{position:absolute;left:-140px;top:150px;width:1780px;height:1100px;transform:rotateX(52deg) rotateZ(-14deg);transform-origin:50% 40%;
+ background:
+  radial-gradient(circle at 2px 2px,#12301f 1.5px,transparent 2px) 0 0/40px 40px,
+  linear-gradient(#0a120e,#070b09);
+ border:2px solid #0f3d27}
+.trace{position:absolute;height:5px;background:#0f3d27;border-radius:3px}
+.trace.hot{background:#3dff8a;box-shadow:0 0 18px #3dff8a}
+.v{width:5px;height:auto}
+.pad{position:absolute;width:18px;height:18px;border-radius:50%;background:#d9b45a;box-shadow:0 0 0 4px #070b09,0 0 0 5px #3a2f14}
+.chip{position:absolute;background:#0c100e;border:2px solid #1c2a22;box-shadow:0 30px 0 -6px #040605, 0 0 60px #3dff8a22}
+.chip .pins{position:absolute;left:14px;right:14px;height:12px;background:repeating-linear-gradient(90deg,#d9b45a 0 10px,transparent 10px 24px)}
+.chip .pins.t{top:-13px}.chip .pins.b{bottom:-13px}
+.u1{left:560px;top:250px;width:520px;height:330px}
+.u1 .die{position:absolute;inset:22px;background:linear-gradient(135deg,#1d5a36,#0b2a1a 45%,#ff2f7a 46%,#ff8a2a 70%,#0b2a1a 71%);display:flex;align-items:flex-end;padding:18px}
+.u1 .die b{font:900 74px/0.9 "Big Shoulders Display";letter-spacing:1px;color:#fff;text-shadow:0 4px 0 #000}
+.u2{left:1180px;top:210px;width:300px;height:200px}.u3{left:1180px;top:500px;width:300px;height:200px}.u4{left:200px;top:520px;width:260px;height:170px}
+.small .die{position:absolute;inset:16px;background:linear-gradient(160deg,#13402a,#0a1a12);display:flex;align-items:flex-end;padding:12px;font:700 34px/0.95 "Big Shoulders Display"}
+.ref{position:absolute;font-size:13px;color:#3dff8a;letter-spacing:2px}
+.silk{position:absolute;left:56px;top:54px;z-index:5}
+.silk h1{font:900 168px/0.82 "Big Shoulders Display";letter-spacing:-2px;color:#3dff8a;text-transform:uppercase}
+.silk p{margin-top:22px;font-size:15px;letter-spacing:3px;color:#e6f2ea}
+.nav{position:absolute;right:56px;top:60px;display:flex;gap:34px;font-size:13px;letter-spacing:2px;color:#9fb5a8;z-index:5}
+.nav b{color:#070b09;background:#3dff8a;padding:10px 16px}
+.tp{position:absolute;z-index:5;border:1px solid #1f3a2b;background:#070b09;padding:14px 18px}
+.tp i{display:block;font:normal 11px "Martian Mono";letter-spacing:2px;color:#d9b45a;margin-bottom:8px}
+.tp b{font:700 56px/1 "Big Shoulders Display";color:#e6f2ea;letter-spacing:1px}
+.edge{position:absolute;left:0;bottom:0;right:0;height:64px;border-top:1px solid #12301f;display:flex;align-items:center;gap:40px;padding:0 56px;font-size:12px;letter-spacing:2px;color:#9fb5a8;background:#070b09;z-index:6}
+.edge span b{color:#3dff8a}
+</style></head><body>
+<div class="board"><div class="plane">
+ <div class="trace hot" style="left:0;top:420px;width:560px"></div>
+ <div class="trace hot" style="left:1080px;top:330px;width:100px"></div>
+ <div class="trace" style="left:1080px;top:540px;width:100px"></div>
+ <div class="trace" style="left:330px;top:420px;width:5px;height:100px"></div>
+ <div class="trace" style="left:1480px;top:310px;width:260px"></div>
+ <div class="trace" style="left:820px;top:580px;width:5px;height:300px"></div>
+ <div class="trace" style="left:460px;top:760px;width:900px"></div>
+ <div class="pad" style="left:322px;top:412px"></div><div class="pad" style="left:812px;top:752px"></div><div class="pad" style="left:1130px;top:322px"></div><div class="pad" style="left:1130px;top:532px"></div>
+ <div class="chip u1"><div class="pins t"></div><div class="pins b"></div><div class="die"><b>RAPTOR<br>HEIST</b></div></div>
+ <div class="ref" style="left:560px;top:214px">U1 · LEAD PROGRAMMER · UEFN / VERSE</div>
+ <div class="chip small u2"><div class="pins t"></div><div class="pins b"></div><div class="die">STEAL AN EGG</div></div>
+ <div class="ref" style="left:1180px;top:176px">U2</div>
+ <div class="chip small u3"><div class="pins t"></div><div class="pins b"></div><div class="die">HAVOC HOTEL 2 · 3</div></div>
+ <div class="ref" style="left:1180px;top:466px">U3</div>
+ <div class="chip small u4"><div class="pins t"></div><div class="pins b"></div><div class="die">ORCS MUST DIE!</div></div>
+ <div class="ref" style="left:200px;top:486px">U4</div>
+</div></div>
+<div class="silk"><h1>Andrés<br>Ordóñez</h1><p>LEAD PROGRAMMER · XR TECH LEAD · MSc COMPUTER SCIENCE</p></div>
+<div class="nav"><span>WORK</span><span>EXPERIENCE</span><span>TEACHING</span><span>RESEARCH</span><b>CONTACT</b></div>
+<div class="tp" style="right:56px;top:420px"><i>TP1 · MINUTES PLAYED · STEAL AN EGG</i><b>565.1M</b></div>
+<div class="tp" style="right:56px;top:560px"><i>TP2 · MINUTES PLAYED · RAPTOR HEIST</i><b>156.5M</b></div>
+<div class="tp" style="left:56px;top:560px"><i>TP3 · THE GAME AWARDS</i><b>NOMINEE</b></div>
+<div class="edge"><span><b>J1</b> PASTO, COLOMBIA</span><span><b>REV</b> 2026</span><span><b>NET</b> EPIC GAMES · WIZARDS OF THE COAST · DC</span><span style="margin-left:auto">SCROLL TO FOLLOW THE SIGNAL ↓</span></div>
+</body></html>

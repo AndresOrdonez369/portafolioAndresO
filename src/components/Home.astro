@@ -1,0 +1,1204 @@
+---
+import Icon from './Icon.astro';
+import Study from './Study.astro';
+import MapView from './MapView.astro';
+import Gallery from './Gallery.astro';
+import Capabilities from './Capabilities.astro';
+import Recognition from './Recognition.astro';
+import Experience from './Experience.astro';
+import About from './About.astro';
+import Interlude from './Interlude.astro';
+import { sm } from '../data/img';
+import { profile, chapters, lifeQuotes, useUI } from '../data/site';
+import { industry } from '../data/projects';
+import { teaching, resources, publications, talks, logoFor } from '../data/career';
+import type { Lang } from '../data/types';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const tr = useUI(lang);
+const ch = Object.fromEntries(chapters.map((c) => [c.id, c]));
+const L = (v: { en: string; es: string }) => v[lang];
+const T = (en: string, es: string) => (lang === 'en' ? en : es);
+
+const fmtRange = (from: string, to: string | null) => {
+  const y = (s: string) => s.slice(0, 4);
+  if (!to) return `${y(from)} — ${tr('now')}`;
+  return y(from) === y(to) ? y(from) : `${y(from)} — ${y(to)}`;
+};
+
+// Sum of public minutes played (Fortnite.gg) across the islands with a published figure.
+const toMinutes = (v: string) => parseFloat(v) * (v.endsWith('B') ? 1e9 : v.endsWith('M') ? 1e6 : v.endsWith('K') ? 1e3 : 1);
+const totalMinutes = industry.reduce((s, p) => s + toMinutes(p.metrics?.find((m) => m.label.en === 'minutes played')?.value ?? '0'), 0);
+const withArt = industry.filter((p) => p.cover && !p.cover.includes('-b.webp'));
+
+const heroSkills = ['Verse · UEFN', 'Unreal Engine · C++', 'Unity · C#', 'VR · AR · XR', 'Deep learning', 'Technical leadership'];
+
+const recognition = [
+  { what: { en: 'The Game Awards · Vote in Fortnite', es: 'The Game Awards · Vote in Fortnite' }, result: { en: 'Nominee', es: 'Nominado' }, for: 'Raptor Heist', year: '2025', url: 'https://thegameawards.com/news/vote-in-fortnite-now-live' },
+  { what: { en: 'The Game Awards · Fortnite Islands', es: 'The Game Awards · islas de Fortnite' }, result: { en: 'Nominee', es: 'Nominado' }, for: 'Havoc Hotel 2', year: '2024', url: 'https://teravisiongames.com/havoc-hotel-2-nominated-for-the-game-awards-in-the-fortnite-islands-category/' },
+  { what: { en: 'UEFN Community Awards · Best Use of Verse', es: 'UEFN Community Awards · Best Use of Verse' }, result: { en: 'Nominee', es: 'Nominado' }, for: 'Raptor Heist', year: '2026' },
+  { what: { en: 'Francisco José de Caldas Medal', es: 'Medalla Francisco José de Caldas' }, result: { en: 'Awarded', es: 'Otorgada' }, for: 'Universidad del Cauca', year: '2024', url: 'https://drive.google.com/file/d/1DFo828xbnmF6uHj6MiiIKAu04GXFmO9l/view?usp=drive_link' },
+  { what: { en: '1,000 Leaders for Colombia', es: '1.000 Líderes por Colombia' }, result: { en: 'Selected', es: 'Seleccionado' }, for: 'Fundación Origen', year: '2024' },
+];
+const nowTeaching = teaching.filter((t) => !t.to);
+const pastTeaching = teaching.filter((t) => t.to);
+---
+
+<MapView lang={lang} />
+
+<div class="territory">
+  <!-- 00 BOOT -->
+  <section id="boot" class="ch ch--boot" data-chapter="boot" style={`--tint:${ch.boot.tint}`} aria-labelledby="boot-h">
+    <div class="boot">
+      <h1 id="boot-h" class="boot__name">
+        <span class="line">Andrés</span>
+        <span class="line">Ordóñez<span class="boot__hyph">-</span><wbr />Bolaños</span>
+      </h1>
+      <p class="boot__role">{L(profile.role)}</p>
+      <p class="boot__intro">{L(profile.intro)}</p>
+      <ul class="boot__skills" aria-label={T('Core skills', 'Habilidades principales')}>
+        {heroSkills.map((s) => <li>{s}</li>)}
+      </ul>
+      <div class="boot__cta">
+        <a class="btn btn--primary" href="#simulacra">{tr('seeWork')}<Icon name="arrow" /></a>
+        <a class="btn" href="#mirror">{tr('contact')}</a>
+        <a class="btn" href={profile.cv} download>{tr('downloadCv')}<Icon name="download" /></a>
+      </div>
+    </div>
+
+    <a class="probe" data-anchor="u1" href="#simulacra">
+      <svg class="probe__lead" aria-hidden="true"><line x1="0" y1="0" x2="0" y2="0" /></svg>
+      <span class="probe__total"><b>3.2B+</b> {T(`minutes played across ${industry.length} live games`, `minutos jugados en ${industry.length} juegos en vivo`)}</span>
+      <span class="probe__now" aria-live="off">
+        <span class="probe__label">{T('On the chip', 'En el chip')}</span>
+        <span class="probe__title" data-probe-title>{withArt[0].title}</span>
+        <span class="probe__meta" data-probe-meta>{L(withArt[0].role)} · {withArt[0].metrics?.[0]?.value} {withArt[0].metrics?.[0] ? L(withArt[0].metrics[0].label) : ''}</span>
+      </span>
+    </a>
+    <script type="application/json" id="lid-data" set:html={JSON.stringify(withArt.map((p) => ({ title: p.title, cover: sm(p.cover!), meta: `${L(p.role)}${p.metrics?.[0] ? ` · ${p.metrics[0].value} ${L(p.metrics[0].label)}` : ` · ${p.platforms[0]}`}` })))} />
+
+    <p class="boot__scroll" aria-hidden="true">{profile.origin} · {L(ch.boot.line)}</p>
+  </section>
+
+  <!-- 01 CAPABILITIES -->
+  <section id="capabilities" class="ch" data-chapter="capabilities" style={`--tint:${ch.capabilities.tint}`} aria-labelledby="cap-h">
+    <header class="ch__head">
+      <h2 id="cap-h" data-reveal>{L(ch.capabilities.title)}</h2>
+      <p class="ch__line">{L(ch.capabilities.line)}</p>
+    </header>
+    <div class="panel">
+      <Capabilities lang={lang} />
+    </div>
+  </section>
+
+  <!-- 02 SIMULACRA: shipped games -->
+  <section id="simulacra" class="ch" data-chapter="simulacra" style={`--tint:${ch.simulacra.tint}`} aria-labelledby="sim-h">
+    <header class="ch__head">
+      <h2 id="sim-h" data-reveal>{L(ch.simulacra.title)}</h2>
+      <p class="ch__line">{L(ch.simulacra.line)}</p>
+      <blockquote class="quote"><p>“{L(ch.simulacra.quote!.text)}”</p><cite>{ch.simulacra.quote!.by}</cite></blockquote>
+    </header>
+    <div class="panel">
+      <Gallery lang={lang} />
+      <p class="source">{T('Metrics: public Fortnite.gg island pages, November 2026. Teravision Games titles; role shown on each.', 'Métricas: páginas públicas de Fortnite.gg, noviembre de 2026. Títulos de Teravision Games; el rol aparece en cada uno.')}</p>
+    </div>
+  </section>
+
+  <!-- 03 RECOGNITION -->
+  <section id="recognition" class="ch ch--gold" data-chapter="recognition" style={`--tint:${ch.recognition.tint}`} aria-labelledby="rec-h">
+    <header class="ch__head">
+      <h2 id="rec-h" data-reveal>{L(ch.recognition.title)}</h2>
+      <p class="ch__line">{L(ch.recognition.line)}</p>
+    </header>
+    <div class="panel panel--light">
+      <Recognition lang={lang} />
+    </div>
+  </section>
+
+  <Interlude
+    kind="glyphs"
+    quote={L(lifeQuotes[1].text)}
+    by={lifeQuotes[1].by}
+  />
+
+  <!-- 04 THE VIRTUAL: XR, research, art, independent games -->
+  <section id="virtual" class="ch" data-chapter="virtual" style={`--tint:${ch.virtual.tint}`} aria-labelledby="vir-h">
+    <header class="ch__head">
+      <h2 id="vir-h" data-reveal>{L(ch.virtual.title)}</h2>
+      <p class="ch__line">{L(ch.virtual.line)}</p>
+      <blockquote class="quote"><p>“{L(ch.virtual.quote!.text)}”</p><cite>{ch.virtual.quote!.by}</cite></blockquote>
+    </header>
+    <div class="panel">
+      <div class="research">
+      <div class="papers">
+        <h3 class="sub">{tr('publications')}</h3>
+        <ol class="pubs">
+          {publications.map((p) => (
+            <li>
+              <span class="mono">{p.year} · {L(p.kind)}</span>
+              <a href={p.url} target="_blank" rel="noopener">{p.title}<Icon name="out" /></a>
+              <span class="pubs__venue">{p.venue}</span>
+            </li>
+          ))}
+        </ol>
+        <details class="fold">
+          <summary><span class="sub">{tr('talks')}</span><span class="mono">{talks.length}</span></summary>
+          <ol class="talks">
+            {talks.map((t) => (
+              <li><span class="mono">{t.year}</span><b>{L(t.title)}</b><span>{L(t.role)} · {t.place}</span></li>
+            ))}
+          </ol>
+        </details>
+      </div>
+        <aside class="research__study">
+          
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 TIME -->
+  <section id="time" class="ch" data-chapter="time" style={`--tint:${ch.time.tint}`} aria-labelledby="time-h">
+    <header class="ch__head">
+      <h2 id="time-h" data-reveal>{L(ch.time.title)}</h2>
+      <p class="ch__line">{L(ch.time.line)}</p>
+      <blockquote class="quote"><p>“{L(ch.time.quote!.text)}”</p><cite>{ch.time.quote!.by}</cite></blockquote>
+    </header>
+    <div class="panel">
+      <Experience lang={lang} />
+    </div>
+  </section>
+
+  <!-- 06 SEEING -->
+  <section id="seeing" class="ch" data-chapter="seeing" style={`--tint:${ch.seeing.tint}`} aria-labelledby="see-h">
+    <header class="ch__head">
+      <h2 id="see-h" data-reveal>{L(ch.seeing.title)}</h2>
+      <p class="ch__line">{L(ch.seeing.line)}</p>
+      <blockquote class="quote"><p>“{L(ch.seeing.quote!.text)}”</p><cite>{ch.seeing.quote!.by}</cite></blockquote>
+    </header>
+    <div class="panel">
+      <div class="seeing">
+        <div class="seeing__now">
+          <h3 class="sub sub--first">{tr('teachingNow')}</h3>
+          <ul class="classes">
+            {nowTeaching.map((t) => (
+              <li class:list={['class', { 'class--hi': t.highlight }]}>
+                <span class="class__logo">{logoFor(t.org) && <img src={logoFor(t.org)} alt="" loading="lazy" />}</span>
+                <p class="class__role">{L(t.role)}</p>
+                <p class="class__org">{t.org}</p>
+                <p class="class__courses">{L(t.courses)}</p>
+              </li>
+            ))}
+          </ul>
+          <h3 class="sub">{tr('teachingBefore')}</h3>
+          <ul class="past">
+            {pastTeaching.map((t) => (
+              <li><span class="mono">{fmtRange(t.from, t.to)}</span><b>{t.org}</b><span>{L(t.courses)}</span></li>
+            ))}
+          </ul>
+        </div>
+        <aside class="seeing__side">
+          <Study
+            lang={lang}
+            id="perceptron"
+            title="Perceptron"
+            year="2026"
+            technique={T('neural network, trained live', 'red neuronal entrenada en vivo')}
+            caption={T('A two-layer network learns to separate two classes while you watch. Click to add points; Shift-click for the other class.', 'Una red de dos capas aprende a separar dos clases mientras miras. Haz clic para añadir puntos; Shift+clic para la otra clase.')}
+          />
+          <h3 class="sub">{tr('resources')}</h3>
+          <ul class="files">
+            {resources.map((r) => (
+              <li><a href={r.file} target="_blank" rel="noopener"><Icon name="file" /><span>{L(r.title)}</span><span class="mono">PDF · {r.size}</span></a></li>
+            ))}
+          </ul>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <Interlude
+    kind="art"
+    image="/img/portraits/transhumanism.webp"
+    quote={L(lifeQuotes[0].text)}
+    by={lifeQuotes[0].by}
+    caption={T('“Me, transhumanism” — self-portrait illustration', '“Yo, transhumanismo” — autorretrato ilustrado')}
+  />
+
+  <!-- 07 BECOMING -->
+  <section id="becoming" class="ch" data-chapter="becoming" style={`--tint:${ch.becoming.tint}`} aria-labelledby="bec-h">
+    <header class="ch__head">
+      <h2 id="bec-h" data-reveal>{L(ch.becoming.title)}</h2>
+      <p class="ch__line">{L(ch.becoming.line)}</p>
+      <blockquote class="quote"><p>“{L(ch.becoming.quote!.text)}”</p><cite>{ch.becoming.quote!.by}</cite></blockquote>
+    </header>
+    <div class="panel">
+      <About lang={lang} />
+    </div>
+  </section>
+
+  <!-- 08 MIRROR -->
+  <section id="mirror" class="ch ch--mirror" data-chapter="mirror" style={`--tint:${ch.mirror.tint}`} aria-labelledby="mir-h">
+    <div class="mirror">
+      <h2 id="mir-h" data-reveal>{L(ch.mirror.title)}</h2>
+      <p class="ch__line">{L(ch.mirror.line)}</p>
+      <a class="mirror__mail" href={`mailto:${profile.email}`}>{profile.email}</a>
+      <div class="mirror__cta">
+        <a class="btn btn--primary" href={`mailto:${profile.email}`}><Icon name="mail" />{tr('emailMe')}</a>
+        <button class="btn" type="button" data-copy={profile.email}><Icon name="copy" /><span>{tr('copyEmail')}</span></button>
+        <a class="btn" href={profile.linkedin} target="_blank" rel="noopener"><Icon name="linkedin" />LinkedIn</a>
+        <a class="btn" href={profile.github} target="_blank" rel="noopener"><Icon name="github" />GitHub</a>
+        <a class="btn" href={profile.cv} download><Icon name="download" />{tr('downloadCv')}</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script define:vars={{ copied: tr('copied') }}>
+  window.__copiedLabel = copied;
+</script>
+
+<style>
+  /* ---------- Chapter frame ---------- */
+  .territory {
+    position: relative;
+    z-index: 2;
+    overflow-x: clip;
+  }
+  .ch {
+    position: relative;
+    padding: clamp(6rem, 14vh, 10rem) var(--gutter) clamp(4rem, 10vh, 7rem);
+    padding-left: calc(var(--gutter) + var(--rail) + 2.5rem);
+    min-height: 100vh;
+  }
+  .ch:has(.panel) {
+    padding-bottom: 0;
+  }
+  .ch::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--night) 92%, transparent) 0%, color-mix(in srgb, var(--night) 78%, transparent) 46%, transparent 72%);
+    pointer-events: none;
+  }
+  /* The stage: heading over open 3D, where the camera holds */
+  .ch__head {
+    max-width: 44rem;
+    min-height: min(72vh, 46rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: clamp(2rem, 6vh, 4rem);
+  }
+  .ch--gold .ch__head {
+    min-height: min(56vh, 34rem);
+  }
+  /* The panel: dense content on a calm field, full bleed */
+  .panel {
+    position: relative;
+    padding-block: clamp(3rem, 8vh, 5.5rem) clamp(3rem, 8vh, 5rem);
+  }
+  .panel::before {
+    content: '';
+    position: absolute;
+    inset: 0 -100vw;
+    z-index: -1;
+    background: color-mix(in srgb, var(--night) 95%, transparent);
+    border-top: 1px solid color-mix(in srgb, var(--tint) 35%, transparent);
+  }
+  .panel--light::before {
+    background: color-mix(in srgb, var(--night) 84%, transparent);
+  }
+  .ch__head h2,
+  .mirror h2 {
+    font-size: clamp(3.5rem, 2rem + 6vw, 6rem);
+    color: var(--silk);
+  }
+  .ch__head h2::after {
+    content: '';
+    display: block;
+    width: 3.5rem;
+    height: 3px;
+    margin-top: 1.25rem;
+    background: var(--tint);
+  }
+  .ch__line {
+    margin-top: 1.25rem;
+    font-size: clamp(1.25rem, 1.05rem + 0.6vw, 1.6rem);
+    line-height: 1.35;
+    color: var(--silk);
+    max-width: 36ch;
+  }
+  .quote {
+    margin-top: 1.75rem;
+    max-width: 34rem;
+    font-family: var(--f-art);
+    font-style: italic;
+    font-size: clamp(1.1rem, 1rem + 0.35vw, 1.3rem);
+    line-height: 1.45;
+    color: color-mix(in srgb, var(--tint) 30%, var(--silk));
+  }
+  .quote cite,
+  .lq cite {
+    display: block;
+    margin-top: 0.5rem;
+    font-family: var(--f-text);
+    font-style: normal;
+    font-size: 0.875rem;
+    color: var(--mute);
+  }
+  .quote cite::before,
+  .lq cite::before {
+    content: '— ';
+  }
+  /* Mid-level headings: readable grotesk, not condensed caps */
+  .sub {
+    font-family: var(--f-text);
+    font-weight: 600;
+    font-size: 1.375rem;
+    line-height: 1.25;
+    text-transform: none;
+    letter-spacing: -0.005em;
+    color: var(--silk);
+    margin: 3.5rem 0 1.1rem;
+  }
+  .sub--first {
+    margin-top: 0;
+  }
+  .mono {
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+  }
+  .source {
+    margin-top: 1.5rem;
+    font-size: 0.8125rem;
+    color: var(--faint);
+  }
+  .fold {
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--trace);
+  }
+  .fold summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    cursor: pointer;
+    list-style: none;
+    padding: 0.25rem 0;
+  }
+  .fold summary::-webkit-details-marker {
+    display: none;
+  }
+  .fold summary .sub {
+    margin: 1.25rem 0 1rem;
+  }
+  .fold summary .mono {
+    color: var(--mute);
+  }
+
+  /* ---------- 00 Boot ---------- */
+  .ch--boot {
+    display: grid;
+    align-content: center;
+    min-height: 100svh;
+    padding-top: calc(var(--header) + 2rem);
+  }
+  .ch--boot::before {
+    background: linear-gradient(90deg, color-mix(in srgb, var(--night) 80%, transparent) 10%, transparent 48%);
+  }
+  .boot {
+    max-width: 46rem;
+  }
+  .boot__name {
+    font-size: clamp(3.75rem, 1.5rem + 8.5vw, 9rem);
+    line-height: 0.82;
+    letter-spacing: -0.02em;
+    color: var(--phosphor);
+    text-shadow: 0 0 40px color-mix(in srgb, var(--phosphor) 25%, transparent);
+  }
+  .boot__name .line {
+    display: block;
+  }
+  .boot__name .line + .line {
+    font-size: 0.62em;
+    line-height: 0.95;
+    margin-top: 0.08em;
+    color: var(--silk);
+    text-shadow: none;
+  }
+  .boot__hyph {
+    color: var(--phosphor);
+  }
+  .boot__role {
+    margin-top: 1.4rem;
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.35rem);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--silk);
+  }
+  .boot__intro {
+    margin-top: 1rem;
+    max-width: 34rem;
+    font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+    color: var(--mute);
+  }
+  .boot__skills,
+  .chips {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+  .boot__skills {
+    margin-top: 1.4rem;
+    max-width: 36rem;
+  }
+  .boot__skills li,
+  .chips li {
+    padding: 0.35rem 0.7rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--silk);
+    background: color-mix(in srgb, var(--night) 75%, transparent);
+    border: 1px solid color-mix(in srgb, var(--phosphor) 35%, var(--trace));
+  }
+  .boot__cta {
+    margin-top: 1.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .boot__scroll {
+    position: absolute;
+    left: calc(var(--gutter) + var(--rail) + 2.5rem);
+    bottom: 1.5rem;
+    padding: 0.35rem 0.6rem;
+    font-size: 0.8125rem;
+    color: var(--mute);
+    background: color-mix(in srgb, var(--night) 85%, transparent);
+  }
+
+  /* Probe: readouts on a leader line from the chip, like scope labels */
+  .probe {
+    position: absolute;
+    right: var(--gutter);
+    top: calc(var(--header) + 0.5rem);
+    z-index: 3;
+    display: grid;
+    gap: 0.25rem;
+    width: 18rem;
+    padding-left: 1.1rem;
+    text-decoration: none;
+    text-shadow: 0 1px 12px rgb(10 10 28 / 0.9), 0 0 2px rgb(10 10 28 / 0.9);
+  }
+  .probe::before {
+    content: '';
+    position: absolute;
+    left: -0.3rem;
+    top: 0.85rem;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--phosphor);
+    box-shadow: 0 0 12px var(--phosphor);
+  }
+  .probe:hover {
+    color: inherit;
+  }
+  .probe__lead {
+    position: absolute;
+    left: 0;
+    top: 1.15rem;
+    width: 1px;
+    height: 1px;
+    overflow: visible;
+    pointer-events: none;
+  }
+  .probe__lead line {
+    stroke: var(--phosphor);
+    stroke-width: 1.25;
+    stroke-dasharray: 4 4;
+    transition: opacity 0.4s var(--ease);
+  }
+  .probe__total {
+    font-size: 0.9375rem;
+    color: var(--mute);
+  }
+  .probe__total b {
+    display: block;
+    font-family: var(--f-display);
+    font-weight: 900;
+    font-size: 2.6rem;
+    line-height: 1;
+    color: var(--silk);
+  }
+  .probe__sub {
+    font-size: 0.875rem;
+    color: var(--mute);
+  }
+  .probe__now {
+    display: grid;
+    margin-top: 0.7rem;
+    padding-top: 0.6rem;
+    border-top: 1px dashed color-mix(in srgb, var(--phosphor) 45%, transparent);
+  }
+  .probe__label {
+    font-size: 0.75rem;
+    color: var(--phosphor);
+  }
+  .probe__title {
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: 1.5rem;
+    line-height: 1.05;
+    transition: opacity 0.35s var(--ease);
+  }
+  .probe__meta {
+    font-size: 0.875rem;
+    color: var(--mute);
+    transition: opacity 0.35s var(--ease);
+  }
+  .probe:global(.is-swapping) .probe__title,
+  .probe:global(.is-swapping) .probe__meta {
+    opacity: 0;
+  }
+
+  /* ---------- 01 Capabilities ---------- */
+  .pillars {
+    list-style: none;
+    padding: 0;
+    max-width: 78rem;
+    border-top: 1px solid var(--trace);
+  }
+  .pillar {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.4fr);
+    gap: clamp(1.5rem, 4vw, 4rem);
+    padding: clamp(2rem, 4vw, 3rem) 0;
+    border-bottom: 1px solid var(--trace);
+  }
+  .pillar__figure b {
+    display: block;
+    font-family: var(--f-display);
+    font-weight: 900;
+    font-size: clamp(4rem, 2.5rem + 5vw, 7.5rem);
+    line-height: 0.85;
+    color: var(--phosphor);
+  }
+  .pillar:nth-child(2) .pillar__figure b {
+    color: var(--magenta);
+  }
+  .pillar:nth-child(3) .pillar__figure b {
+    color: var(--cyan);
+  }
+  .pillar:nth-child(4) .pillar__figure b {
+    color: #7aa8ff;
+  }
+  .pillar__figure span {
+    display: block;
+    margin-top: 0.6rem;
+    font-size: 1.05rem;
+    color: var(--mute);
+  }
+  .pillar__body h3 {
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: clamp(1.8rem, 1.3rem + 1.5vw, 2.6rem);
+    line-height: 1;
+  }
+  .pillar__points {
+    margin: 1rem 0 1.25rem;
+    padding-left: 1.1rem;
+    display: grid;
+    gap: 0.5rem;
+    color: var(--mute);
+    max-width: 42rem;
+  }
+  .pillar__points li::marker {
+    color: var(--phosphor);
+  }
+  .bom {
+    width: 100%;
+    max-width: 78rem;
+    border-collapse: collapse;
+  }
+  .bom th,
+  .bom td {
+    text-align: left;
+    padding: 0.85rem 1rem 0.85rem 0;
+    border-bottom: 1px solid var(--trace);
+    vertical-align: baseline;
+  }
+  .bom thead th {
+    font-family: var(--f-mono);
+    font-size: 0.6875rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .bom tbody th {
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .bom td.mono {
+    color: var(--phosphor);
+    width: 3rem;
+  }
+  .bom td:nth-child(3) {
+    color: var(--mute);
+  }
+
+  /* ---------- 02 Simulacra: bento of all shipped games ---------- */
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 1.5rem);
+    max-width: 84rem;
+  }
+  .bento > :global(.tile) {
+    grid-column: span 2;
+  }
+  .bento > :global(.tile--lead) {
+    grid-column: span 3;
+  }
+
+  /* ---------- 03 Recognition ---------- */
+  .joints {
+    list-style: none;
+    padding: 0;
+    max-width: 78rem;
+    border-top: 1px solid color-mix(in srgb, var(--gold) 40%, transparent);
+  }
+  .joint {
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 2.4fr) 8rem minmax(0, 1fr);
+    gap: 1rem 1.5rem;
+    align-items: baseline;
+    padding: 1.35rem 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--gold) 22%, transparent);
+  }
+  .joint__year {
+    color: var(--gold);
+  }
+  .joint__what {
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: clamp(1.5rem, 1.1rem + 1.3vw, 2.4rem);
+    line-height: 1;
+    text-transform: uppercase;
+  }
+  .joint__what a {
+    text-decoration: none;
+  }
+  .joint__what a:hover {
+    color: var(--gold);
+  }
+  .joint__result {
+    font-weight: 600;
+    color: var(--gold);
+  }
+  .joint__result::before {
+    content: '';
+    display: inline-block;
+    width: 0.55rem;
+    height: 0.55rem;
+    margin-right: 0.55rem;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #fff3c4, var(--gold) 55%, #8a6a22);
+  }
+  .joint__for {
+    color: var(--mute);
+  }
+
+  /* ---------- 04 Virtual ---------- */
+  .research {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    max-width: 84rem;
+    align-items: start;
+  }
+  .research .papers > .sub:first-child {
+    margin-top: 0;
+  }
+  .research__study {
+    position: sticky;
+    top: calc(var(--header) + 2rem);
+  }
+  @media (max-width: 900px) {
+    .research {
+      grid-template-columns: 1fr;
+    }
+    .research__study {
+      position: static;
+    }
+  }
+  .xr-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+    gap: clamp(1rem, 2vw, 1.5rem);
+    max-width: 84rem;
+    align-items: start;
+  }
+  .xr-grid > :global(.tile--portrait) {
+    grid-row: span 2;
+  }
+  .xr-grid__study {
+    grid-column: span 1;
+  }
+  .papers {
+    max-width: 52rem;
+  }
+  .pubs,
+  .talks {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1.25rem;
+  }
+  .pubs li,
+  .talks li {
+    display: grid;
+    gap: 0.2rem;
+  }
+  .pubs .mono,
+  .talks .mono {
+    color: var(--faint);
+  }
+  .pubs a {
+    font-weight: 600;
+    text-decoration: none;
+    line-height: 1.35;
+  }
+  .pubs a :global(svg) {
+    display: inline;
+    width: 0.9rem;
+    margin-left: 0.3rem;
+    vertical-align: -0.1em;
+    color: var(--blue);
+  }
+  .pubs__venue,
+  .talks span:last-child {
+    font-size: 0.9375rem;
+    color: var(--mute);
+  }
+
+  /* ---------- 05 Time ---------- */
+  .time {
+    position: relative;
+    display: grid;
+    grid-template-columns: 4rem minmax(0, 1fr);
+    max-width: 52rem;
+  }
+  .time__spine {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4rem;
+    height: 100%;
+  }
+  .timeline {
+    grid-column: 2;
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: clamp(2rem, 4vh, 2.75rem);
+  }
+  .role__title {
+    font-family: var(--f-text);
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: -0.01em;
+    font-size: clamp(1.35rem, 1.15rem + 0.7vw, 1.8rem);
+    line-height: 1.15;
+  }
+  .role__org {
+    margin-top: 0.3rem;
+    font-weight: 600;
+    color: var(--silk);
+  }
+  .role__org span {
+    font-weight: 400;
+    color: var(--mute);
+  }
+  .role__when {
+    margin-top: 0.3rem;
+    color: #b6a4ff;
+  }
+  .role--now .role__when {
+    color: var(--phosphor);
+  }
+  .role__text {
+    margin-top: 0.5rem;
+    color: var(--mute);
+    max-width: 40rem;
+  }
+  .web-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: 1rem;
+    max-width: 84rem;
+  }
+
+  /* ---------- 06 Seeing ---------- */
+  .seeing {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    max-width: 78rem;
+  }
+  .classes {
+    list-style: none;
+    padding: 0;
+    border-top: 1px solid var(--trace);
+  }
+  .class {
+    display: grid;
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    gap: 0.1rem 1rem;
+    padding: 1.3rem 0;
+    border-bottom: 1px solid var(--trace);
+  }
+  .class__logo {
+    grid-row: span 3;
+    width: 3.5rem;
+    height: 3.5rem;
+    background: #fff;
+    overflow: hidden;
+  }
+  .class__logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .class__role {
+    font-weight: 600;
+    font-size: clamp(1.2rem, 1.05rem + 0.5vw, 1.5rem);
+    line-height: 1.2;
+  }
+  .class--hi .class__role {
+    font-size: clamp(1.4rem, 1.15rem + 0.9vw, 1.9rem);
+  }
+  .class__org {
+    margin-top: 0.3rem;
+    font-weight: 600;
+    color: var(--cyan);
+  }
+  .class__courses {
+    margin-top: 0.4rem;
+    color: var(--mute);
+  }
+  .class--hi .class__courses {
+    color: var(--silk);
+  }
+  .past {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.9rem;
+  }
+  .past li {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    gap: 0.1rem 1rem;
+  }
+  .past .mono {
+    color: var(--faint);
+    padding-top: 0.3rem;
+  }
+  .past span:last-child {
+    grid-column: 2;
+    color: var(--mute);
+    font-size: 0.9375rem;
+  }
+  .files {
+    list-style: none;
+    padding: 0;
+    border-top: 1px solid var(--trace);
+  }
+  .files a {
+    display: grid;
+    grid-template-columns: 1.25rem minmax(0, 1fr) auto;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--trace);
+    text-decoration: none;
+  }
+  .files :global(svg) {
+    width: 1.1rem;
+    color: var(--cyan);
+  }
+  .files .mono {
+    color: var(--faint);
+  }
+
+  /* ---------- 07 Becoming ---------- */
+  .becoming {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    max-width: 78rem;
+    align-items: start;
+  }
+  .portrait {
+    position: sticky;
+    top: calc(var(--header) + 2rem);
+  }
+  .portrait__main {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 50% 15%;
+    border: 1px solid var(--trace);
+    box-shadow: 0 40px 70px -40px rgb(0 0 0 / 0.95);
+  }
+  .portrait__inset {
+    position: absolute;
+    right: -1.25rem;
+    bottom: 3rem;
+    width: 34%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border: 3px solid var(--night);
+    outline: 1px solid var(--phosphor);
+    box-shadow: 0 20px 40px -20px rgb(0 0 0 / 0.9);
+  }
+  .portrait figcaption {
+    margin-top: 0.8rem;
+    font-size: 0.875rem;
+    color: var(--faint);
+  }
+  .bio {
+    max-width: 42rem;
+  }
+  .bio__lead {
+    font-size: clamp(1.15rem, 1.05rem + 0.4vw, 1.4rem);
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+  }
+  .bio > p {
+    color: var(--mute);
+  }
+  .bio > .bio__lead {
+    color: var(--silk);
+  }
+  .bio__plain + .bio__plain {
+    margin-top: 0.5rem;
+  }
+  .edu,
+  .awards,
+  .ventures,
+  .lq {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+  .edu li,
+  .awards li {
+    display: grid;
+    grid-template-columns: 6.5rem minmax(0, 1fr);
+    gap: 0.1rem 1rem;
+  }
+  .edu li > :not(.mono),
+  .awards__org {
+    grid-column: 2;
+  }
+  .edu .mono,
+  .awards .mono {
+    color: var(--faint);
+    padding-top: 0.3rem;
+  }
+  .edu b {
+    font-weight: 600;
+    font-size: 1.2rem;
+  }
+  .edu__note,
+  .awards__org,
+  .ventures span {
+    color: var(--mute);
+    font-size: 0.9375rem;
+  }
+  .awards {
+    gap: 0.75rem;
+  }
+  .awards a {
+    text-decoration: none;
+  }
+  .ventures li {
+    display: grid;
+    gap: 0.15rem;
+  }
+  .ventures b {
+    font-weight: 600;
+    font-size: 1.15rem;
+  }
+  .lq p {
+    font-family: var(--f-art);
+    font-style: italic;
+    font-size: 1.15rem;
+    line-height: 1.45;
+    color: color-mix(in srgb, var(--orange) 25%, var(--silk));
+  }
+  .becoming__study {
+    grid-column: 2;
+    max-width: 42rem;
+  }
+
+  /* ---------- 08 Mirror ---------- */
+  .ch--mirror {
+    display: grid;
+    align-content: center;
+    min-height: 100svh;
+  }
+  .ch--mirror::before {
+    background: linear-gradient(90deg, color-mix(in srgb, var(--night) 85%, transparent), transparent 70%);
+  }
+  .mirror {
+    max-width: 46rem;
+  }
+  .mirror .ch__line {
+    max-width: 30ch;
+  }
+  .mirror__mail {
+    display: inline-block;
+    margin-top: 2.5rem;
+    font-family: var(--f-display);
+    font-weight: 900;
+    font-size: clamp(2rem, 0.8rem + 3.4vw, 4rem);
+    line-height: 1;
+    text-transform: uppercase;
+    color: var(--phosphor);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .mirror__mail:hover {
+    color: var(--silk);
+  }
+  .mirror__cta {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1100px) {
+    .ch {
+      padding-left: var(--gutter);
+    }
+    .boot__scroll {
+      left: var(--gutter);
+    }
+    .bento > :global(.tile),
+    .bento > :global(.tile--lead) {
+      grid-column: span 3;
+    }
+  }
+  @media (max-width: 900px) {
+    .ch::before {
+      background: color-mix(in srgb, var(--night) 72%, transparent);
+    }
+    .ch--boot::before {
+      background: linear-gradient(180deg, color-mix(in srgb, var(--night) 90%, transparent) 0%, color-mix(in srgb, var(--night) 84%, transparent) 62%, color-mix(in srgb, var(--night) 30%, transparent) 100%);
+    }
+    .pillar {
+      grid-template-columns: 1fr;
+    }
+    .joint {
+      grid-template-columns: 3.5rem minmax(0, 1fr);
+    }
+    .joint__result,
+    .joint__for {
+      grid-column: 2;
+    }
+    .seeing,
+    .becoming {
+      grid-template-columns: 1fr;
+    }
+    .portrait {
+      position: relative;
+      top: 0;
+      max-width: 26rem;
+    }
+    .portrait__inset {
+      right: -0.75rem;
+    }
+    .becoming__study {
+      grid-column: 1;
+    }
+    .xr-grid__study {
+      grid-column: 1 / -1;
+    }
+    .probe {
+      position: relative;
+      right: auto;
+      top: auto;
+      margin-top: 2.5rem;
+      width: min(100%, 22rem);
+      padding: 1rem 1.1rem 1.1rem 1.8rem;
+      background: color-mix(in srgb, var(--night) 88%, transparent);
+    }
+    .probe::before {
+      left: 0.75rem;
+      top: 1.85rem;
+    }
+    .probe__lead,
+    .boot__scroll {
+      display: none;
+    }
+    .bom thead {
+      display: none;
+    }
+    .bom tr {
+      display: grid;
+      grid-template-columns: 2.5rem 1fr;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid var(--trace);
+    }
+    .bom th,
+    .bom td {
+      border: 0;
+      padding: 0;
+    }
+    .bom td:nth-child(3) {
+      grid-column: 1 / -1;
+      margin-top: 0.3rem;
+    }
+  }
+  @media (max-width: 640px) {
+    .bento > :global(.tile),
+    .bento > :global(.tile--lead) {
+      grid-column: 1 / -1;
+    }
+    .time {
+      grid-template-columns: 2rem minmax(0, 1fr);
+    }
+    .time__spine {
+      width: 2rem;
+    }
+    .past li,
+    .edu li,
+    .awards li {
+      grid-template-columns: 1fr;
+    }
+    .past span:last-child,
+    .edu li > :not(.mono),
+    .awards__org {
+      grid-column: 1;
+    }
+  }
+
+  :global(html[data-view='map']) .territory {
+    display: none;
+  }
+</style>

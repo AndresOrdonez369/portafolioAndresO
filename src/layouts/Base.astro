@@ -1,0 +1,341 @@
+---
+import '@fontsource/big-shoulders-display/700';
+import '@fontsource/big-shoulders-display/800';
+import '@fontsource/big-shoulders-display/900';
+import '@fontsource/martian-mono/400';
+import '@fontsource/martian-mono/600';
+import '@fontsource/familjen-grotesk/400';
+import '@fontsource/familjen-grotesk/600';
+import '@fontsource/bodoni-moda/500-italic';
+import '../styles/global.css';
+import Icon from '../components/Icon.astro';
+import Console from '../components/Console.astro';
+import { profile, chapters, useUI, path } from '../data/site';
+import type { Lang } from '../data/types';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  /** Path of this page without the language prefix, e.g. "/" or "/work/raptor-heist/". */
+  route: string;
+  home?: boolean;
+  image?: string;
+}
+const { lang, title, description, route, home = false, image = '/img/projects/raptor-heist.webp' } = Astro.props;
+const tr = useUI(lang);
+const other: Lang = lang === 'en' ? 'es' : 'en';
+const site = Astro.site ?? new URL('https://ordonezoswaldo.com');
+const canonical = new URL(path(lang, route), site).href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: profile.name,
+  jobTitle: 'Lead Programmer',
+  worksFor: { '@type': 'Organization', name: 'Teravision Games' },
+  alumniOf: ['Universidad del Cauca', 'Universidad de Nariño'],
+  url: site.href,
+  sameAs: [profile.linkedin, profile.github],
+};
+---
+<!doctype html>
+<html lang={lang} data-view="territory">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en" href={new URL(path('en', route), site).href} />
+    <link rel="alternate" hreflang="es" href={new URL(path('es', route), site).href} />
+    <link rel="alternate" hreflang="x-default" href={new URL(path('en', route), site).href} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, site).href} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#0a0a1c" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script is:inline>
+      // Restore the reader's chosen view before paint, so Map readers never see the 3D flash.
+      try {
+        const v = new URLSearchParams(location.search).get('view') || sessionStorage.getItem('view');
+        if (v === 'map' || (!v && matchMedia('(prefers-reduced-motion: reduce)').matches)) document.documentElement.dataset.view = 'map';
+      } catch (e) {}
+    </script>
+  </head>
+  <body class:list={[{ 'is-home': home }]}>
+    <a class="skip" href="#content">{tr('skip')}</a>
+
+    {home && <canvas id="board" aria-hidden="true"></canvas>}
+    {home && <div class="board-poster" aria-hidden="true"></div>}
+
+    <header class="top">
+      <a class="brand" href={path(lang, '/')} aria-label={profile.name}>
+        <span class="brand__mark mono">J1</span>
+        <span class="brand__name">{profile.short}</span>
+      </a>
+      <nav class="controls" aria-label="Site">
+        {home && (
+          <div class="switch" role="group" aria-label={tr('viewSwitch')}>
+            <button type="button" data-view-btn="map" aria-pressed="false"><span class="lg">{tr('map')}</span><span class="sm" aria-hidden="true">{tr('map')}</span></button>
+            <button type="button" data-view-btn="territory" aria-pressed="true"><span class="lg">{tr('territory')}</span><span class="sm" aria-hidden="true">Terr.</span></button>
+          </div>
+        )}
+        <div class="switch" role="group" aria-label="Language">
+          <a href={path('en', route)} hreflang="en" aria-current={lang === 'en' ? 'true' : undefined} data-lang-link>EN</a>
+          <a href={path('es', route)} hreflang="es" aria-current={lang === 'es' ? 'true' : undefined} data-lang-link>ES</a>
+        </div>
+        <a class="btn btn--primary contact-btn" href={home ? '#mirror' : path(lang, '/') + '#mirror'} aria-label={tr('contact')}>
+          <Icon name="mail" class="contact-btn__icon" /><span class="lg">{tr('contact')}</span>
+        </a>
+      </nav>
+    </header>
+
+    {home && (
+      <nav class="rail" aria-label={tr('chapters')}>
+        <ol>
+          {chapters.map((c) => (
+            <li style={`--tint:${c.tint}`}>
+              <a href={`#${c.id}`} data-rail={c.id}>
+                <span class="rail__dot" aria-hidden="true"></span>
+                <span class="rail__n mono">{c.n}</span>
+                <span class="rail__t">{c.title[lang]}</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+        <p class="rail__hint">{tr('consoleHint')}</p>
+      </nav>
+    )}
+
+    <main id="content">
+      <slot />
+    </main>
+
+    <footer class="foot">
+      <p class="mono">{tr('footer')} · Astro · Three.js · GSAP · {new Date().getFullYear()}</p>
+      <p class="mono"><a href={path(other, route)} hreflang={other}>{other === 'es' ? 'Leer en español' : 'Read in English'}</a></p>
+    </footer>
+
+    <Console lang={lang} />
+
+    <script>
+      import '../scripts/main';
+    </script>
+  </body>
+</html>
+
+<style>
+  .top {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 40;
+    height: var(--header);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0 var(--gutter);
+    background: linear-gradient(color-mix(in srgb, var(--night) 70%, transparent), transparent);
+    border-bottom: 1px solid transparent;
+    pointer-events: none;
+    transition: background 0.4s var(--ease), border-color 0.4s var(--ease);
+  }
+  .top:global(.is-scrolled) {
+    background: color-mix(in srgb, var(--night) 94%, transparent);
+    border-bottom-color: var(--trace);
+  }
+  .top > * {
+    pointer-events: auto;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+  }
+  .brand__mark {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--phosphor);
+    color: var(--phosphor);
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+  }
+  .brand__name {
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .switch {
+    display: flex;
+    border: 1px solid var(--trace);
+    background: color-mix(in srgb, var(--night) 80%, transparent);
+  }
+  .switch > * {
+    min-height: 2.875rem;
+    display: grid;
+    place-items: center;
+    padding: 0 0.9rem;
+    font-family: var(--f-text);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--mute);
+    transition: background 0.25s var(--ease), color 0.25s var(--ease);
+  }
+  .switch > *:hover {
+    color: var(--silk);
+  }
+  .switch > [aria-pressed='true'],
+  .switch > [aria-current='true'] {
+    background: var(--phosphor);
+    color: var(--night);
+  }
+
+  .rail {
+    position: fixed;
+    left: var(--gutter);
+    top: 50%;
+    translate: 0 -50%;
+    z-index: 30;
+    width: var(--rail);
+  }
+  .rail ol {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.15rem;
+    position: relative;
+  }
+  .rail ol::before {
+    content: '';
+    position: absolute;
+    left: 0.28rem;
+    top: 0.9rem;
+    bottom: 0.9rem;
+    width: 1px;
+    background: var(--trace);
+  }
+  .rail a {
+    display: grid;
+    grid-template-columns: 0.6rem 2.2rem 1fr;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0;
+    text-decoration: none;
+    color: var(--faint);
+  }
+  .rail__dot {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--night);
+    border: 1px solid var(--tint);
+    position: relative;
+    transition: background 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  }
+  .rail__n {
+    font-size: 0.6875rem;
+  }
+  .rail__t {
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0;
+    translate: -0.4rem 0;
+    transition: opacity 0.3s var(--ease), translate 0.3s var(--ease);
+  }
+  .rail:hover .rail__t,
+  .rail:focus-within .rail__t,
+  .rail a[aria-current='true'] .rail__t {
+    opacity: 1;
+    translate: 0 0;
+  }
+  .rail a:hover,
+  .rail a[aria-current='true'] {
+    color: var(--silk);
+  }
+  .rail a[aria-current='true'] .rail__dot,
+  .rail a.is-past .rail__dot {
+    background: var(--tint);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--tint) 20%, transparent);
+  }
+  .rail a.is-past .rail__dot {
+    box-shadow: none;
+  }
+  .rail__hint {
+    margin-top: 1.5rem;
+    font-family: var(--f-text);
+    font-size: 0.75rem;
+    letter-spacing: 0;
+    text-transform: none;
+    line-height: 1.5;
+    color: var(--faint);
+    max-width: 10rem;
+  }
+
+  .foot {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 2rem var(--gutter) 2.5rem;
+    color: var(--faint);
+    border-top: 1px solid var(--trace);
+    background: var(--night);
+  }
+  .foot .mono {
+    font-size: 0.6875rem;
+  }
+
+  :global(html[data-view='map']) .rail {
+    display: none;
+  }
+
+  @media (max-width: 1100px) {
+    .rail {
+      display: none;
+    }
+  }
+  .sm,
+  .contact-btn :global(.contact-btn__icon) {
+    display: none;
+  }
+  @media (max-width: 640px) {
+    .brand__name,
+    .lg {
+      display: none;
+    }
+    .sm,
+    .contact-btn :global(.contact-btn__icon) {
+      display: inline;
+    }
+    .controls {
+      gap: 0.4rem;
+    }
+    .switch > * {
+      padding: 0 0.6rem;
+    }
+    .contact-btn {
+      padding-inline: 0.8rem;
+    }
+  }
+</style>

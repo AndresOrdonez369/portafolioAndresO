@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Release Board</title>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Extra+Condensed:wght@600;800&family=Martian+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0}
+body{width:1440px;height:900px;overflow:hidden;background:#050806;color:#e8f5ec;font-family:"Martian Mono",monospace;display:grid;grid-template-columns:400px 1fr}
+.pass{background:#e8f5ec;color:#050806;padding:44px 40px;position:relative;display:flex;flex-direction:column}
+.pass:after{content:"";position:absolute;right:-9px;top:0;bottom:0;width:18px;background:radial-gradient(circle,#050806 7px,transparent 8px) 0 0/18px 26px}
+.pass small{font-size:11px;letter-spacing:3px;color:#4c5a52}
+.pass h1{font:800 132px/0.8 "Saira Extra Condensed";text-transform:uppercase;margin:10px 0 28px}
+.seg{border-top:2px dashed #050806;padding:18px 0}
+.seg b{display:block;font:800 44px/1 "Saira Extra Condensed";text-transform:uppercase;margin-top:6px}
+.scan{margin-top:auto;height:120px;background:repeating-linear-gradient(90deg,#050806 0 3px,transparent 3px 7px,#050806 7px 9px,transparent 9px 16px,#050806 16px 22px,transparent 22px 25px)}
+.seq{font-size:13px;letter-spacing:4px;margin-top:12px;font-weight:600}
+.board{padding:44px 56px 0 64px}
+.head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:26px}
+.head h2{font:800 96px/0.8 "Saira Extra Condensed";text-transform:uppercase;letter-spacing:1px}
+.head nav{display:flex;gap:26px;font-size:12px;letter-spacing:2px;color:#8a9a90}
+.cols,.r{display:grid;grid-template-columns:1.9fr 1.3fr 1fr .6fr .9fr;gap:18px;align-items:center}
+.cols{font-size:11px;letter-spacing:3px;color:#8a9a90;padding:0 18px 12px;border-bottom:1px solid #1d2a23}
+.r{padding:0 18px;height:82px;border-bottom:1px solid #131c17;font-size:14px;letter-spacing:1px;color:#b9c9bf}
+.r b{font:800 50px/1 "Saira Extra Condensed";text-transform:uppercase;color:#e8f5ec;letter-spacing:.5px}
+.r em{font-style:normal;font-weight:600;letter-spacing:2px}
+.r.live{background:#2dff7e;color:#050806}.r.live b{color:#050806}
+.r .nom{color:#2dff7e}
+</style></head><body>
+<aside class="pass">
+ <small>PASSENGER / ENGINEER</small>
+ <h1>Andrés Ordóñez</h1>
+ <div class="seg"><small>ROLE</small><b>Lead Programmer</b></div>
+ <div class="seg"><small>FROM → TO</small><b>Pasto → San Francisco</b></div>
+ <div class="seg"><small>CLASS</small><b>UEFN · Unreal · XR</b></div>
+ <div class="scan"></div><div class="seq">SEQ 007 · MSc COMPUTER SCIENCE</div>
+</aside>
+<main class="board">
+ <div class="head"><h2>Departures</h2><nav><span>SHIPPED</span><span>EXPERIENCE</span><span>TEACHING</span><span>RESEARCH</span><span>CONTACT</span></nav></div>
+ <div class="cols"><span>TITLE</span><span>ROLE</span><span>PLATFORM</span><span>YEAR</span><span>STATUS</span></div>
+ <div class="r live"><b>Steal an Egg</b><span>Lead Programmer</span><span>UEFN</span><span>2026</span><em>LIVE · TOP 3</em></div>
+ <div class="r"><b>Raptor Heist</b><span>Lead Programmer</span><span>UEFN</span><span>2025</span><em class="nom">NOMINATED</em></div>
+ <div class="r"><b>Havoc Hotel 3</b><span>Lead Programmer</span><span>UEFN</span><span>2025</span><em class="nom">NOMINATED</em></div>
+ <div class="r"><b>Clayface × Havoc Hotel</b><span>Lead Programmer</span><span>UEFN</span><span>2026</span><em>SHIPPED</em></div>
+ <div class="r"><b>Dungeons &amp; Dragons</b><span>Lead Programmer</span><span>UEFN</span><span>2025</span><em>LIVEOPS</em></div>
+ <div class="r"><b>Orcs Must Die! By the Blade</b><span>Technical Lead</span><span>Meta Quest</span><span>2026</span><em>SHIPPED</em></div>
+ <div class="r"><b>Inspira</b><span>VR Tech Lead</span><span>VR</span><span>2025</span><em>SHIPPED</em></div>
+ <div class="r"><b>Inti</b><span>Director</span><span>VR + IoT</span><span>2023</span><em>RESEARCH</em></div>
+</main>
+</body></html>

@@ -1,0 +1,80 @@
+---
+import { useUI } from '../data/site';
+import type { Lang } from '../data/types';
+interface Props {
+  lang: Lang;
+  id: 'soft-time' | 'perceptron' | 'mirrors' | 'swarm';
+  title: string;
+  year: string;
+  technique: string;
+  caption: string;
+  tall?: boolean;
+}
+const { lang, id, title, year, technique, caption, tall = false } = Astro.props;
+const tr = useUI(lang);
+---
+<figure class:list={['study', { 'study--tall': tall }]} data-study={id}>
+  <div class="study__frame">
+    <canvas aria-label={caption} role="img"></canvas>
+    <button type="button" class="study__reset mono" data-study-reset>{tr('reset')}</button>
+  </div>
+  <figcaption>
+    <span class="study__title"><em>{title}</em>, {year}</span>
+    <span class="mono">{tr('study')} · {technique}</span>
+    <span class="study__cap">{caption}</span>
+  </figcaption>
+</figure>
+
+<style>
+  .study {
+    display: grid;
+    gap: 0.9rem;
+  }
+  .study__frame {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    background: var(--night);
+    border: 1px solid var(--trace);
+    overflow: hidden;
+  }
+  .study--tall .study__frame {
+    aspect-ratio: 3 / 4;
+  }
+  .study canvas {
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+    touch-action: none;
+  }
+  .study__reset {
+    position: absolute;
+    right: 0.6rem;
+    bottom: 0.6rem;
+    padding: 0.45rem 0.7rem;
+    font-size: 0.625rem;
+    color: var(--mute);
+    border: 1px solid var(--trace);
+    background: color-mix(in srgb, var(--night) 85%, transparent);
+  }
+  .study__reset:hover {
+    color: var(--night);
+    background: var(--phosphor);
+    border-color: var(--phosphor);
+  }
+  figcaption {
+    display: grid;
+    gap: 0.2rem;
+    color: var(--mute);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+  .study__title {
+    font-family: var(--f-art);
+    font-size: 1.125rem;
+    color: var(--silk);
+  }
+  figcaption .mono {
+    font-size: 0.625rem;
+    color: var(--faint);
+  }
+</style>

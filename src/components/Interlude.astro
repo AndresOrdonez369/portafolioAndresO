@@ -1,0 +1,99 @@
+---
+// An art break between chapters: a quote over a live glyph rain, or over one of Andrés's artworks.
+interface Props {
+  kind: 'glyphs' | 'art';
+  quote: string;
+  by: string;
+  image?: string;
+  caption?: string;
+}
+const { kind, quote, by, image, caption } = Astro.props;
+---
+<aside class:list={['inter', `inter--${kind}`]}>
+  {kind === 'glyphs' && <canvas data-study="glyphs" aria-hidden="true"></canvas>}
+  {kind === 'art' && image && <img class="inter__art" src={image} alt="" loading="lazy" decoding="async" />}
+  <blockquote>
+    <p>“{quote}”</p>
+    <cite>{by}</cite>
+  </blockquote>
+  {caption && <p class="inter__cap">{caption}</p>}
+</aside>
+
+<style>
+  .inter {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    align-items: center;
+    min-height: min(78vh, 46rem);
+    padding: clamp(4rem, 10vh, 7rem) var(--gutter);
+    overflow: hidden;
+    background: var(--night);
+    border-block: 1px solid var(--trace);
+  }
+  .inter canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.55;
+    mask-image: linear-gradient(90deg, transparent 0%, #000 30%, #000 70%, transparent 100%);
+  }
+  .inter__art {
+    position: absolute;
+    right: 6%;
+    top: 50%;
+    height: 118%;
+    width: auto;
+    max-width: none;
+    translate: 0 -50%;
+    rotate: 4deg;
+    opacity: 0.92;
+    mix-blend-mode: screen;
+    filter: saturate(1.15) contrast(1.05);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 28%, #000 100%);
+  }
+  .inter--art {
+    background: linear-gradient(100deg, var(--night) 35%, #1a1247 100%);
+  }
+  blockquote {
+    position: relative;
+    max-width: 22ch;
+    margin-inline: auto;
+    text-align: center;
+    font-family: var(--f-art);
+    font-style: italic;
+    font-size: clamp(1.9rem, 1.2rem + 3vw, 4rem);
+    line-height: 1.15;
+    text-wrap: balance;
+    text-shadow: 0 2px 30px var(--night), 0 0 6px var(--night);
+  }
+  .inter--art blockquote {
+    margin-inline: clamp(0rem, 8vw, 10rem) auto;
+    text-align: left;
+  }
+  cite {
+    display: block;
+    margin-top: 1.25rem;
+    font-family: var(--f-text);
+    font-style: normal;
+    font-size: 1rem;
+    color: var(--mute);
+  }
+  cite::before {
+    content: '— ';
+  }
+  .inter__cap {
+    position: absolute;
+    left: var(--gutter);
+    bottom: 1.25rem;
+    font-size: 0.8125rem;
+    color: var(--faint);
+  }
+  @media (max-width: 800px) {
+    .inter__art {
+      right: -30%;
+      opacity: 0.45;
+    }
+  }
+</style>

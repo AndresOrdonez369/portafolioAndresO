@@ -1,0 +1,375 @@
+---
+import Study from './Study.astro';
+import { education, awards, courses, ventures, logoFor } from '../data/career';
+import { useUI } from '../data/site';
+import type { Lang } from '../data/types';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const tr = useUI(lang);
+const L = (v: { en: string; es: string }) => v[lang];
+const T = (en: string, es: string) => (lang === 'en' ? en : es);
+const passions = tr('passionsList').split(' · ');
+const facts = [
+  { k: T('Based in', 'Vivo en'), v: 'Colombia' },
+  { k: T('Works with', 'Trabajo con'), v: T('Studios in the US and LatAm, remote', 'Estudios en EE. UU. y LatAm, remoto') },
+  { k: T('Languages', 'Idiomas'), v: T('Spanish (native) · English (professional)', 'Español (nativo) · Inglés (profesional)') },
+];
+---
+<div class="about">
+  <div class="about__top">
+    <figure class="id">
+      <img src="/img/portraits/green.webp" alt={T('Portrait of Andrés Ordóñez-Bolaños in phosphor green', 'Retrato de Andrés Ordóñez-Bolaños en verde fósforo')} width="543" height="532" loading="lazy" decoding="async" />
+      <span class="id__scan" aria-hidden="true"></span>
+      <figcaption><span class="mono">ID · AOB-2026</span> Pasto, Colombia</figcaption>
+    </figure>
+    <div class="about__say">
+      <p class="about__claim">{T('Engineer by training. Artist by curiosity. Teacher by choice.', 'Ingeniero de formación. Artista por curiosidad. Profesor por elección.')}</p>
+      <p>
+        {T('I grew up in a small town in southern Colombia, trying to understand the world through art, philosophy and history. I studied electronic engineering, researched how to read emotions from brain signals, and ran art and technology labs before moving into XR and games.',
+           'Crecí en un pueblo pequeño del sur de Colombia, tratando de entender el mundo a través del arte, la filosofía y la historia. Estudié ingeniería electrónica, investigué cómo leer emociones en señales cerebrales y dirigí laboratorios de arte y tecnología antes de pasar a XR y videojuegos.')}
+      </p>
+      <p>
+        {T('Today I lead engineering at Teravision Games and teach AI and software architecture to graduate students. I still work where those fields meet.',
+           'Hoy lidero ingeniería en Teravision Games y enseño IA y arquitectura de software en posgrado. Sigo trabajando donde esos campos se encuentran.')}
+      </p>
+      <dl class="facts">
+        {facts.map((f) => <div><dt>{f.k}</dt><dd>{f.v}</dd></div>)}
+      </dl>
+    </div>
+  </div>
+
+  <div class="about__cols">
+    <section>
+      <h3 class="h">{tr('education')}</h3>
+      <ul class="edu">
+        {education.map((e) => (
+          <li>
+            <span class="plate">{logoFor(e.org) && <img src={logoFor(e.org)} alt="" loading="lazy" />}</span>
+            <div>
+              <b>{L(e.degree)}</b>
+              <span class="edu__org">{e.org} · {e.years}</span>
+              <span class="edu__note">{L(e.note)}</span>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+    <section>
+      <h3 class="h">{tr('ventures')}</h3>
+      <ul class="edu">
+        {ventures.map((v) => (
+          <li>
+            <span class="plate">{logoFor(v.name) && <img src={logoFor(v.name)} alt="" loading="lazy" />}</span>
+            <div>
+              <b>{v.url ? <a href={v.url} target="_blank" rel="noopener">{v.name}</a> : v.name}</b>
+              <span class="edu__note">{L(v.text)}</span>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <h3 class="h h--gap">{tr('passions')}</h3>
+      <ul class="chips">
+        {passions.map((p) => <li>{p}</li>)}
+      </ul>
+    </section>
+  </div>
+
+  <section class="about__awards">
+    <h3 class="h">{tr('awards')} <span class="mono">{awards.length}</span></h3>
+    <ul class="aw">
+      {awards.map((a) => (
+        <li>
+          <span class="aw__y">{a.year}</span>
+          <span class="aw__n">{a.url ? <a href={a.url} target="_blank" rel="noopener">{L(a.name)}</a> : L(a.name)}</span>
+          <span class="aw__o">{a.org}</span>
+        </li>
+      ))}
+    </ul>
+    <details class="fold">
+      <summary><span class="h">{tr('courses')}</span><span class="mono">{courses.length}</span></summary>
+      <ul class="aw">
+        {courses.map((c) => (
+          <li>
+            <span class="aw__y">{c.year}</span>
+            <span class="aw__n">{c.url ? <a href={c.url} target="_blank" rel="noopener">{c.name}</a> : c.name}</span>
+            <span class="aw__o">{c.org}</span>
+          </li>
+        ))}
+      </ul>
+    </details>
+  </section>
+
+  <aside class="about__study">
+    <Study
+      lang={lang}
+      id="swarm"
+      title="Swarm"
+      year="2026"
+      technique={T('genetic agents, after Bee Genetic Race', 'agentes genéticos, a partir de Bee Genetic Race')}
+      caption={T('Each generation, the agents that reach the flower breed. Click to move the flower.', 'En cada generación se reproducen los agentes que llegan a la flor. Haz clic para mover la flor.')}
+    />
+  </aside>
+</div>
+
+<style>
+  .about {
+    max-width: 84rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    gap: clamp(2.5rem, 5vw, 4rem) clamp(2rem, 4vw, 4rem);
+  }
+  .about__top,
+  .about__cols {
+    grid-column: 1 / -1;
+  }
+  .about__top {
+    display: grid;
+    grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+  }
+  /* Portrait as an ID plate: phosphor frame, corner ticks, a slow scanline */
+  .id {
+    position: relative;
+    padding: 0.6rem;
+    border: 1px solid var(--phosphor);
+    box-shadow: 0 0 70px -25px var(--phosphor), 0 40px 60px -40px #000;
+  }
+  .id::before,
+  .id::after {
+    content: '';
+    position: absolute;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 3px solid var(--phosphor);
+  }
+  .id::before {
+    left: -0.5rem;
+    top: -0.5rem;
+    border-right: 0;
+    border-bottom: 0;
+  }
+  .id::after {
+    right: -0.5rem;
+    bottom: -0.5rem;
+    border-left: 0;
+    border-top: 0;
+  }
+  .id img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+  .id__scan {
+    position: absolute;
+    inset: 0.6rem 0.6rem 2.6rem;
+    pointer-events: none;
+    background: repeating-linear-gradient(180deg, transparent 0 3px, rgb(10 10 28 / 0.22) 3px 4px), linear-gradient(180deg, transparent 45%, rgb(53 245 138 / 0.28) 50%, transparent 55%);
+    background-size: auto, 100% 300%;
+    animation: scan 6s linear infinite;
+  }
+  @keyframes scan {
+    from {
+      background-position: 0 0, 0 100%;
+    }
+    to {
+      background-position: 0 0, 0 -100%;
+    }
+  }
+  .id figcaption {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 0.6rem;
+    font-size: 0.875rem;
+    color: var(--mute);
+  }
+  .id figcaption .mono {
+    color: var(--phosphor);
+  }
+  .about__claim {
+    font-family: var(--f-display);
+    font-weight: 900;
+    font-size: clamp(2.25rem, 1.4rem + 3vw, 4.25rem);
+    line-height: 0.95;
+    text-transform: uppercase;
+    text-wrap: balance;
+    color: var(--silk);
+    margin-bottom: 1.5rem;
+  }
+  .about__say > p:not(.about__claim) {
+    max-width: 40rem;
+    font-size: 1.1rem;
+    color: var(--mute);
+  }
+  .about__say > p + p {
+    margin-top: 0.9rem;
+  }
+  .facts {
+    margin-top: 1.75rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    border-top: 1px solid var(--trace);
+    padding-top: 1rem;
+  }
+  .facts dt {
+    font-size: 0.875rem;
+    color: var(--faint);
+  }
+  .facts dd {
+    margin: 0.2rem 0 0;
+    font-weight: 600;
+  }
+  .about__cols {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(2rem, 4vw, 4rem);
+    padding-top: clamp(2rem, 4vw, 3rem);
+    border-top: 1px solid var(--trace);
+  }
+  .h {
+    font-family: var(--f-text);
+    font-weight: 600;
+    font-size: 1.375rem;
+    line-height: 1.25;
+    text-transform: none;
+    letter-spacing: -0.005em;
+    margin-bottom: 1rem;
+  }
+  .h .mono {
+    margin-left: 0.4rem;
+    color: var(--faint);
+  }
+  .h--gap {
+    margin-top: 2.25rem;
+  }
+  .edu {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+  .edu li {
+    display: grid;
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    gap: 1rem;
+    align-items: start;
+  }
+  .plate {
+    display: block;
+    width: 3.5rem;
+    height: 3.5rem;
+    background: #fff;
+    overflow: hidden;
+  }
+  .plate img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .edu b {
+    display: block;
+    font-weight: 600;
+    font-size: 1.15rem;
+    line-height: 1.25;
+  }
+  .edu b a {
+    text-decoration: none;
+  }
+  .edu__org,
+  .edu__note {
+    display: block;
+    font-size: 0.9375rem;
+    color: var(--mute);
+  }
+  .edu__org {
+    color: var(--silk);
+  }
+  .chips {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .chips li {
+    padding: 0.3rem 0.7rem;
+    font-size: 0.9375rem;
+    border: 1px solid color-mix(in srgb, var(--orange) 45%, var(--trace));
+  }
+  .aw {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 2rem;
+    border-top: 1px solid var(--trace);
+  }
+  .aw li {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    gap: 0 0.75rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--trace);
+  }
+  .aw__y {
+    grid-row: span 2;
+    font-family: var(--f-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    color: var(--gold);
+    padding-top: 0.25rem;
+  }
+  .aw__n {
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .aw__n a {
+    text-decoration: none;
+  }
+  .aw__o {
+    font-size: 0.875rem;
+    color: var(--mute);
+  }
+  .fold {
+    margin-top: 1.5rem;
+  }
+  .fold summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    cursor: pointer;
+    list-style: none;
+  }
+  .fold summary::-webkit-details-marker {
+    display: none;
+  }
+  .fold summary .h::after {
+    content: ' +';
+    color: var(--orange);
+  }
+  .fold[open] summary .h::after {
+    content: ' −';
+  }
+  .fold summary .mono {
+    color: var(--mute);
+  }
+  @media (max-width: 900px) {
+    .about,
+    .about__top,
+    .about__cols {
+      grid-template-columns: 1fr;
+    }
+    .id {
+      max-width: 20rem;
+    }
+    .facts,
+    .aw {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

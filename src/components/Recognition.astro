@@ -1,0 +1,222 @@
+---
+import Icon from './Icon.astro';
+import { awards } from '../data/career';
+import { path } from '../data/site';
+import type { Lang } from '../data/types';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const L = (v: { en: string; es: string }) => v[lang];
+const T = (en: string, es: string) => (lang === 'en' ? en : es);
+
+const industry = [
+  {
+    year: '2025',
+    body: 'The Game Awards',
+    what: T('Nominee · Vote in Fortnite', 'Nominado · Vote in Fortnite'),
+    game: 'Raptor Heist',
+    img: '/img/projects/sm/raptor-heist.webp',
+    href: path(lang, '/work/raptor-heist/'),
+  },
+  {
+    year: '2024',
+    body: 'The Game Awards',
+    what: T('Nominee · Fortnite Islands', 'Nominado · islas de Fortnite'),
+    game: 'Havoc Hotel 2',
+    img: '/img/projects/sm/havoc-hotel-2-tga.webp',
+    href: path(lang, '/work/havoc-hotel-2/'),
+  },
+  {
+    year: '2026',
+    body: 'UEFN Community Awards',
+    what: T('Nominee · Best Use of Verse', 'Nominado · Best Use of Verse'),
+    game: 'Raptor Heist',
+    img: '/img/projects/sm/raptor-heist-lab.webp',
+    href: path(lang, '/work/raptor-heist/'),
+  },
+];
+const top = awards.slice(0, 8);
+---
+<div class="rec">
+  <ol class="rec__lead">
+    {industry.map((r) => (
+      <li>
+        <a class="medal" href={r.href}>
+          <span class="medal__art"><img src={r.img} alt="" loading="lazy" decoding="async" /></span>
+          <span class="medal__year">{r.year}</span>
+          <span class="medal__body">{r.body}</span>
+          <span class="medal__what">{r.what}</span>
+          <span class="medal__game">{r.game}<Icon name="arrow" /></span>
+        </a>
+      </li>
+    ))}
+  </ol>
+
+  <div class="rec__more">
+    <h3>{T('Academic and civic honors', 'Honores académicos y cívicos')}</h3>
+    <ul>
+      {top.map((a) => (
+        <li>
+          <span class="rec__y">{a.year}</span>
+          <span class="rec__n">{a.url ? <a href={a.url} target="_blank" rel="noopener">{L(a.name)}</a> : L(a.name)}</span>
+          <span class="rec__o">{a.org}</span>
+        </li>
+      ))}
+    </ul>
+    <a class="rec__all" href="#becoming">{T(`All ${awards.length} awards and honors`, `Los ${awards.length} premios y honores`)}<Icon name="arrow" /></a>
+  </div>
+</div>
+
+<style>
+  .rec {
+    max-width: 84rem;
+    display: grid;
+    gap: clamp(2.5rem, 5vw, 4rem);
+  }
+  .rec__lead {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 1.5rem);
+  }
+  .medal {
+    position: relative;
+    display: grid;
+    align-content: end;
+    min-height: 26rem;
+    padding: 1.4rem;
+    overflow: hidden;
+    text-decoration: none;
+    border: 1px solid color-mix(in srgb, var(--gold) 55%, transparent);
+    isolation: isolate;
+  }
+  .medal:hover {
+    color: inherit;
+    border-color: var(--gold);
+  }
+  .medal__art {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+  .medal__art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.9s var(--ease);
+  }
+  .medal:hover .medal__art img {
+    transform: scale(1.05);
+  }
+  .medal__art::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgb(10 10 28 / 0.1) 0%, rgb(10 10 28 / 0.9) 42%, rgb(10 10 28 / 0.98) 100%);
+  }
+  .medal__year {
+    font-family: var(--f-display);
+    font-weight: 900;
+    font-size: clamp(3.5rem, 2.5rem + 3vw, 5.5rem);
+    line-height: 0.85;
+    color: var(--gold);
+  }
+  .medal__body {
+    margin-top: 0.6rem;
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: clamp(1.5rem, 1.2rem + 0.9vw, 2.1rem);
+    line-height: 1;
+    text-transform: uppercase;
+  }
+  .medal__what {
+    margin-top: 0.4rem;
+    font-weight: 600;
+    color: var(--gold);
+  }
+  .medal__game {
+    margin-top: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9375rem;
+    color: var(--silk);
+  }
+  .medal__game :global(svg) {
+    width: 1rem;
+    height: 1rem;
+    transition: translate 0.3s var(--ease);
+  }
+  .medal:hover .medal__game :global(svg) {
+    translate: 0.3rem 0;
+  }
+
+  .rec__more h3 {
+    font-family: var(--f-text);
+    font-weight: 600;
+    font-size: 1.375rem;
+    line-height: 1.25;
+    text-transform: none;
+    letter-spacing: -0.005em;
+    margin-bottom: 1rem;
+  }
+  .rec__more ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(1.5rem, 4vw, 4rem);
+    border-top: 1px solid color-mix(in srgb, var(--gold) 35%, transparent);
+  }
+  .rec__more li {
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    gap: 0 1rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--gold) 20%, transparent);
+  }
+  .rec__y {
+    grid-row: span 2;
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: 1.5rem;
+    line-height: 1.1;
+    color: var(--gold);
+  }
+  .rec__n {
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .rec__n a {
+    text-decoration: none;
+  }
+  .rec__o {
+    font-size: 0.9375rem;
+    color: var(--mute);
+  }
+  .rec__all {
+    margin-top: 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  .rec__all :global(svg) {
+    width: 1rem;
+    height: 1rem;
+  }
+  @media (max-width: 900px) {
+    .rec__lead,
+    .rec__more ul {
+      grid-template-columns: 1fr;
+    }
+    .medal {
+      min-height: 17rem;
+    }
+  }
+</style>

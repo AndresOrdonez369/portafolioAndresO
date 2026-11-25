@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Island Code</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Martian+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0}
+body{width:1440px;height:900px;overflow:hidden;background:#070b09;color:#eaf5ee;font-family:"Martian Mono",monospace;position:relative}
+.art{position:absolute;left:0;top:0;width:1440px;height:640px;background:
+ radial-gradient(900px 500px at 70% 40%,#1f7a48 0,#0c2e1c 45%,#070b09 80%),
+ #070b09}
+.art:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#070b09 0,#070b09cc 28%,transparent 60%),linear-gradient(0deg,#070b09 0,transparent 30%)}
+.shape{position:absolute;right:120px;top:70px;width:560px;height:520px;background:linear-gradient(140deg,#ff2f7a,#ff8a2a 50%,#f4ff3a);clip-path:polygon(18% 0,100% 12%,86% 100%,0 82%);opacity:.9}
+.top{position:absolute;left:56px;right:56px;top:36px;display:flex;justify-content:space-between;align-items:center;font-size:13px;letter-spacing:2px;z-index:3}
+.top .me{color:#39ff88;font-weight:600}
+.top nav{display:flex;gap:30px;color:#a9bdb1}
+.hero{position:absolute;left:56px;top:150px;z-index:3;width:760px}
+.by{color:#f4ff3a;font-size:14px;letter-spacing:3px;font-weight:600}
+h1{font:400 150px/0.88 "Anton";text-transform:uppercase;margin:14px 0 26px;letter-spacing:1px}
+.row{display:flex;gap:14px;align-items:center}
+.play{background:#f4ff3a;color:#070b09;font-weight:600;padding:18px 26px;font-size:15px;letter-spacing:2px}
+.code{border:2px solid #39ff88;color:#39ff88;padding:16px 22px;font-size:17px;letter-spacing:3px;font-weight:600}
+.tags{display:flex;gap:10px;margin-top:22px}
+.tags span{background:#18221d;padding:9px 14px;font-size:12px;letter-spacing:2px}
+.stats{position:absolute;right:56px;top:470px;display:flex;gap:14px;z-index:3}
+.stat{background:#18221dee;padding:18px 24px;min-width:200px}
+.stat b{display:block;font:400 54px/1 "Anton"}
+.stat i{font:normal 11px "Martian Mono";letter-spacing:2px;color:#a9bdb1}
+.rail{position:absolute;left:56px;right:0;top:680px;display:flex;gap:18px}
+.isl{flex:0 0 300px;height:260px;background:#18221d;position:relative;overflow:hidden}
+.isl .k{height:170px;background:linear-gradient(135deg,#1b6a40,#0b2a1a)}
+.isl:nth-child(2) .k{background:linear-gradient(135deg,#2a56ff,#0b1a3a)}
+.isl:nth-child(3) .k{background:linear-gradient(135deg,#7a2aff,#1a0b3a)}
+.isl:nth-child(4) .k{background:linear-gradient(135deg,#ff5a2a,#3a140b)}
+.isl:nth-child(5) .k{background:linear-gradient(135deg,#c8a13a,#2a200b)}
+.isl b{display:block;font:400 28px/1 "Anton";padding:12px 14px 4px;text-transform:uppercase}
+.isl i{font:normal 11px "Martian Mono";letter-spacing:2px;color:#39ff88;padding:0 14px}
+</style></head><body>
+<div class="art"><div class="shape"></div></div>
+<div class="top"><span class="me">ANDRÉS ORDÓÑEZ-BOLAÑOS · LEAD PROGRAMMER</span><nav><span>ISLANDS</span><span>EXPERIENCE</span><span>TEACHING</span><span>RESEARCH</span><span>CONTACT</span></nav></div>
+<div class="hero">
+ <div class="by">TERAVISION GAMES · LEAD PROGRAMMER</div>
+ <h1>Raptor Heist</h1>
+ <div class="row"><span class="play">WATCH TRAILER</span><span class="code">1311-3035-1480</span></div>
+ <div class="tags"><span>ROGUELIKE</span><span>UEFN</span><span>VERSE</span><span>THE GAME AWARDS NOMINEE</span></div>
+</div>
+<div class="stats">
+ <div class="stat"><b>156.5M</b><i>MINUTES PLAYED</i></div>
+ <div class="stat"><b>121.1K</b><i>FAVORITES</i></div>
+ <div class="stat"><b>88.2%</b><i>LIKED</i></div>
+</div>
+<div class="rail">
+ <div class="isl"><div class="k"></div><b>Steal an Egg</b><i>6898-9449-5160</i></div>
+ <div class="isl"><div class="k"></div><b>Havoc Hotel 3</b><i>0335-8436-1670</i></div>
+ <div class="isl"><div class="k"></div><b>Havoc Hotel 2</b><i>7996-5597-0868</i></div>
+ <div class="isl"><div class="k"></div><b>Orcs Must Die!</b><i>META QUEST</i></div>
+ <div class="isl"><div class="k"></div><b>Dungeons &amp; Dragons</b><i>WIZARDS OF THE COAST</i></div>
+</div>
+</body></html>

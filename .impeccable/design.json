@@ -1,0 +1,553 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-11T22:54:58.728Z",
+  "title": "Design System: Andrés Ordóñez-Bolaños — Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "night": {
+        "role": "neutral",
+        "displayName": "Night",
+        "tonalRamp": [
+          "oklch(15% 0.04 280)",
+          "oklch(25% 0.04 280)",
+          "oklch(35% 0.04 280)",
+          "oklch(45% 0.04 280)",
+          "oklch(55% 0.04 280)",
+          "oklch(65% 0.04 280)",
+          "oklch(80% 0.04 280)",
+          "oklch(95% 0.04 280)"
+        ]
+      },
+      "board": {
+        "role": "neutral",
+        "displayName": "Solder Mask",
+        "tonalRamp": [
+          "oklch(15% 0.06 280)",
+          "oklch(25% 0.06 280)",
+          "oklch(35% 0.06 280)",
+          "oklch(45% 0.06 280)",
+          "oklch(55% 0.06 280)",
+          "oklch(65% 0.06 280)",
+          "oklch(80% 0.06 280)",
+          "oklch(95% 0.06 280)"
+        ]
+      },
+      "trace": {
+        "role": "neutral",
+        "displayName": "Copper Trace",
+        "tonalRamp": [
+          "oklch(15% 0.1 280)",
+          "oklch(25% 0.1 280)",
+          "oklch(35% 0.1 280)",
+          "oklch(45% 0.1 280)",
+          "oklch(55% 0.1 280)",
+          "oklch(65% 0.1 280)",
+          "oklch(80% 0.1 280)",
+          "oklch(95% 0.1 280)"
+        ]
+      },
+      "phosphor": {
+        "role": "primary",
+        "displayName": "Phosphor Silkscreen",
+        "tonalRamp": [
+          "oklch(15% 0.21 152)",
+          "oklch(25% 0.21 152)",
+          "oklch(35% 0.21 152)",
+          "oklch(45% 0.21 152)",
+          "oklch(55% 0.21 152)",
+          "oklch(65% 0.21 152)",
+          "oklch(80% 0.21 152)",
+          "oklch(95% 0.21 152)"
+        ]
+      },
+      "phosphor-dim": {
+        "role": "primary",
+        "displayName": "Dim Phosphor",
+        "tonalRamp": [
+          "oklch(15% 0.13 152)",
+          "oklch(25% 0.13 152)",
+          "oklch(35% 0.13 152)",
+          "oklch(45% 0.13 152)",
+          "oklch(55% 0.13 152)",
+          "oklch(65% 0.13 152)",
+          "oklch(80% 0.13 152)",
+          "oklch(95% 0.13 152)"
+        ]
+      },
+      "gold": {
+        "role": "secondary",
+        "displayName": "ENIG Gold",
+        "tonalRamp": [
+          "oklch(15% 0.11 85)",
+          "oklch(25% 0.11 85)",
+          "oklch(35% 0.11 85)",
+          "oklch(45% 0.11 85)",
+          "oklch(55% 0.11 85)",
+          "oklch(65% 0.11 85)",
+          "oklch(80% 0.11 85)",
+          "oklch(95% 0.11 85)"
+        ]
+      },
+      "violet": {
+        "role": "tertiary",
+        "displayName": "Dream Violet",
+        "tonalRamp": [
+          "oklch(15% 0.24 285)",
+          "oklch(25% 0.24 285)",
+          "oklch(35% 0.24 285)",
+          "oklch(45% 0.24 285)",
+          "oklch(55% 0.24 285)",
+          "oklch(65% 0.24 285)",
+          "oklch(80% 0.24 285)",
+          "oklch(95% 0.24 285)"
+        ]
+      },
+      "magenta": {
+        "role": "tertiary",
+        "displayName": "Horizon Magenta",
+        "tonalRamp": [
+          "oklch(15% 0.22 355)",
+          "oklch(25% 0.22 355)",
+          "oklch(35% 0.22 355)",
+          "oklch(45% 0.22 355)",
+          "oklch(55% 0.22 355)",
+          "oklch(65% 0.22 355)",
+          "oklch(80% 0.22 355)",
+          "oklch(95% 0.22 355)"
+        ]
+      },
+      "cyan": {
+        "role": "tertiary",
+        "displayName": "Lens Cyan",
+        "tonalRamp": [
+          "oklch(15% 0.14 185)",
+          "oklch(25% 0.14 185)",
+          "oklch(35% 0.14 185)",
+          "oklch(45% 0.14 185)",
+          "oklch(55% 0.14 185)",
+          "oklch(65% 0.14 185)",
+          "oklch(80% 0.14 185)",
+          "oklch(95% 0.14 185)"
+        ]
+      },
+      "blue": {
+        "role": "tertiary",
+        "displayName": "Electric Blue",
+        "tonalRamp": [
+          "oklch(15% 0.2 260)",
+          "oklch(25% 0.2 260)",
+          "oklch(35% 0.2 260)",
+          "oklch(45% 0.2 260)",
+          "oklch(55% 0.2 260)",
+          "oklch(65% 0.2 260)",
+          "oklch(80% 0.2 260)",
+          "oklch(95% 0.2 260)"
+        ]
+      },
+      "orange": {
+        "role": "tertiary",
+        "displayName": "Portrait Orange",
+        "tonalRamp": [
+          "oklch(15% 0.2 37)",
+          "oklch(25% 0.2 37)",
+          "oklch(35% 0.2 37)",
+          "oklch(45% 0.2 37)",
+          "oklch(55% 0.2 37)",
+          "oklch(65% 0.2 37)",
+          "oklch(80% 0.2 37)",
+          "oklch(95% 0.2 37)"
+        ]
+      },
+      "acid": {
+        "role": "tertiary",
+        "displayName": "Acid Yellow",
+        "tonalRamp": [
+          "oklch(15% 0.18 105)",
+          "oklch(25% 0.18 105)",
+          "oklch(35% 0.18 105)",
+          "oklch(45% 0.18 105)",
+          "oklch(55% 0.18 105)",
+          "oklch(65% 0.18 105)",
+          "oklch(80% 0.18 105)",
+          "oklch(95% 0.18 105)"
+        ]
+      },
+      "silk": {
+        "role": "neutral",
+        "displayName": "Silk",
+        "tonalRamp": [
+          "oklch(15% 0.03 285)",
+          "oklch(25% 0.03 285)",
+          "oklch(35% 0.03 285)",
+          "oklch(45% 0.03 285)",
+          "oklch(55% 0.03 285)",
+          "oklch(65% 0.03 285)",
+          "oklch(80% 0.03 285)",
+          "oklch(95% 0.03 285)"
+        ]
+      },
+      "mute": {
+        "role": "neutral",
+        "displayName": "Mute",
+        "tonalRamp": [
+          "oklch(15% 0.06 280)",
+          "oklch(25% 0.06 280)",
+          "oklch(35% 0.06 280)",
+          "oklch(45% 0.06 280)",
+          "oklch(55% 0.06 280)",
+          "oklch(65% 0.06 280)",
+          "oklch(80% 0.06 280)",
+          "oklch(95% 0.06 280)"
+        ]
+      },
+      "faint": {
+        "role": "neutral",
+        "displayName": "Faint",
+        "tonalRamp": [
+          "oklch(15% 0.07 280)",
+          "oklch(25% 0.07 280)",
+          "oklch(35% 0.07 280)",
+          "oklch(45% 0.07 280)",
+          "oklch(55% 0.07 280)",
+          "oklch(65% 0.07 280)",
+          "oklch(80% 0.07 280)",
+          "oklch(95% 0.07 280)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The name in the first viewport only; phosphor with a soft glow."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Chapter titles over the stage, followed by a 3.5rem x 3px tint bar; Mirror title; case-study h1."
+      },
+      "figure": {
+        "displayName": "Figure",
+        "purpose": "Capability pillar numbers; relatives at 900 for the probe total, case readouts, and the Mirror email."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Tile, game, pillar, and probe titles in uppercase silkscreen; recognition rows at 700."
+      },
+      "nameplate": {
+        "displayName": "Nameplate",
+        "purpose": "Brand name, rail titles, hero role line, MAP block headings and game rows."
+      },
+      "subhead": {
+        "displayName": "Subhead",
+        "purpose": "Mid-level headings inside panels, in grotesk for legibility."
+      },
+      "role": {
+        "displayName": "Role",
+        "purpose": "Timeline and teaching role titles, sentence case."
+      },
+      "control": {
+        "displayName": "Control",
+        "purpose": "Every button, sentence case."
+      },
+      "switch": {
+        "displayName": "Switch",
+        "purpose": "Header segment labels, uppercase."
+      },
+      "chip": {
+        "displayName": "Chip",
+        "purpose": "Hero skill chips and pillar stack chips."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Chapter line under each heading, max 36ch."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "All reading copy."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Citations, figure captions, sources, probe sub-lines, platform lists."
+      },
+      "label": {
+        "displayName": "Designator",
+        "purpose": "Refs, dates, ranges, metric sources, island codes, table headers, console. Never below 0.6875rem; never sentences."
+      },
+      "quote": {
+        "displayName": "Quote",
+        "purpose": "Chapter epigraphs, life-philosophy quotes, and art or study titles only."
+      }
+    },
+    "shadows": [
+      {
+        "name": "art-drop",
+        "value": "0 40px 80px -40px rgb(0 0 0 / 0.9)",
+        "purpose": "Under the case hero; the Becoming portrait uses 0 40px 70px -40px at 0.95."
+      },
+      {
+        "name": "tile-lift",
+        "value": "0 24px 40px -24px rgb(0 0 0 / 0.9)",
+        "purpose": "Project tiles on hover and focus-within only, with translateY(-3px)."
+      },
+      {
+        "name": "console-float",
+        "value": "0 24px 60px -20px rgb(0 0 0 / 0.8)",
+        "purpose": "Console dialog only."
+      },
+      {
+        "name": "phosphor-glow",
+        "value": "0 0 12px var(--phosphor)",
+        "purpose": "Live status dot and probe anchor pad."
+      },
+      {
+        "name": "name-glow",
+        "value": "text-shadow: 0 0 40px color-mix(in srgb, var(--phosphor) 25%, transparent)",
+        "purpose": "The display name only."
+      },
+      {
+        "name": "pad-halo",
+        "value": "0 0 0 4px color-mix(in srgb, var(--tint) 20%, transparent)",
+        "purpose": "Active chapter-rail dot."
+      },
+      {
+        "name": "play-halo",
+        "value": "0 0 0 8px color-mix(in srgb, var(--phosphor) 25%, transparent)",
+        "purpose": "Play pad ring (10px on case pages; 12px at 30% on hover)."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Exponential ease-out on every UI transition."
+      },
+      {
+        "name": "state",
+        "value": "0.2s-0.4s",
+        "purpose": "Hover, switch, header, rail, and tile state changes."
+      },
+      {
+        "name": "silkscreen-wipe",
+        "value": "clip-path inset(0 100% 0 0) to inset(0) over 1.1s",
+        "purpose": "Chapter headings print left to right when 12% into view; removed under reduced motion."
+      },
+      {
+        "name": "to-map",
+        "value": "camera lift 0.9s power2.in; canvas fade 0.6s; nets draw 1.4s staggered 0.12s; blocks rise 0.7s staggered 0.06s",
+        "purpose": "TERRITORY to MAP."
+      },
+      {
+        "name": "to-territory",
+        "value": "camera descent 1.6s expo.out",
+        "purpose": "MAP to TERRITORY."
+      },
+      {
+        "name": "camera-rail",
+        "value": "hold first half of chapter, smoothstep travel, damping 1 - exp(-dt * 3.2)",
+        "purpose": "Scroll-driven camera between stations; the signal head advances in step; frozen under reduced motion."
+      },
+      {
+        "name": "lid-glitch",
+        "value": "hold 4.5s; 0.9s banded wipe, 22 bands, shear up to 0.06 peaking mid-transition, red-channel offset, phosphor scanline flashes",
+        "purpose": "Hero chip lid cycling shipped games; probe title and meta fade 0.35s at 45%; off under reduced motion."
+      },
+      {
+        "name": "tile-hover",
+        "value": "lift 3px 0.4s; art scale 1.04 + saturate 1.12 over 0.8s",
+        "purpose": "Project tile hover and focus-within."
+      },
+      {
+        "name": "surreal-drift",
+        "value": "0.12-0.17 rad/s drift, 0.08 rad sway",
+        "purpose": "Slow world motion; never fast."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact",
+        "value": "560px"
+      },
+      {
+        "name": "phone",
+        "value": "640px"
+      },
+      {
+        "name": "map-sheet",
+        "value": "700px"
+      },
+      {
+        "name": "case",
+        "value": "800px"
+      },
+      {
+        "name": "tablet",
+        "value": "900px"
+      },
+      {
+        "name": "rail",
+        "value": "1100px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Pad Button",
+      "kind": "button",
+      "refersTo": "button-pad",
+      "description": "Secondary silkscreen pad: outlined grotesk label, floods with its text color on hover.",
+      "html": "<a class=\"ds-btn\" href=\"#\">Download CV <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"square\"><path d=\"M4 12h15M13 6l6 6-6 6\"/></svg></a>",
+      "css": ".ds-btn{--c:var(--silk,#ecebff);display:inline-flex;align-items:center;gap:.6rem;min-height:2.875rem;padding:.7rem 1.15rem;font-family:var(--f-text,'Familjen Grotesk',system-ui,sans-serif);font-size:.9375rem;font-weight:600;letter-spacing:.01em;text-decoration:none;transition:background .25s cubic-bezier(.16,1,.3,1),color .25s cubic-bezier(.16,1,.3,1),border-color .25s cubic-bezier(.16,1,.3,1),transform .25s cubic-bezier(.16,1,.3,1);color:var(--c);border:1px solid color-mix(in srgb,var(--c) 45%,transparent);background:color-mix(in srgb,var(--night,#0a0a1c) 70%,transparent)}.ds-btn:hover{color:var(--night,#0a0a1c);background:var(--c);border-color:var(--c)}.ds-btn:active{transform:translateY(1px)}.ds-btn:focus-visible{outline:2px solid var(--phosphor,#35f58a);outline-offset:3px}"
+    },
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one phosphor action per cluster (See work, Contact, Email me).",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">See work <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"square\"><path d=\"M4 12h15M13 6l6 6-6 6\"/></svg></a>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;gap:.6rem;min-height:2.875rem;padding:.7rem 1.15rem;font-family:var(--f-text,'Familjen Grotesk',system-ui,sans-serif);font-size:.9375rem;font-weight:600;letter-spacing:.01em;text-decoration:none;transition:background .25s cubic-bezier(.16,1,.3,1),color .25s cubic-bezier(.16,1,.3,1),border-color .25s cubic-bezier(.16,1,.3,1),transform .25s cubic-bezier(.16,1,.3,1);color:var(--night,#0a0a1c);background:var(--phosphor,#35f58a);border:1px solid var(--phosphor,#35f58a)}.ds-btn-primary:hover{background:var(--silk,#ecebff);border-color:var(--silk,#ecebff)}.ds-btn-primary:active{transform:translateY(1px)}.ds-btn-primary:focus-visible{outline:2px solid var(--phosphor,#35f58a);outline-offset:3px}"
+    },
+    {
+      "name": "View Switch",
+      "kind": "nav",
+      "refersTo": "switch-segment",
+      "description": "Segmented MAP/TERRITORY and EN/ES control in grotesk caps; the active segment fills phosphor.",
+      "html": "<div class=\"ds-switch\" role=\"group\"><button type=\"button\" aria-pressed=\"false\">Map</button><button type=\"button\" aria-pressed=\"true\">Territory</button></div>",
+      "css": ".ds-switch{display:inline-flex;border:1px solid var(--trace,#2a2a63);background:color-mix(in srgb,var(--night,#0a0a1c) 80%,transparent)}.ds-switch>*{min-height:2.875rem;padding:0 .9rem;font-family:var(--f-text,'Familjen Grotesk',system-ui,sans-serif);font-size:.875rem;font-weight:600;letter-spacing:.02em;text-transform:uppercase;color:var(--mute,#a3a5c9);background:none;border:0;cursor:pointer;transition:background .25s cubic-bezier(.16,1,.3,1),color .25s cubic-bezier(.16,1,.3,1)}.ds-switch>*:hover{color:var(--silk,#ecebff)}.ds-switch>[aria-pressed=true]{background:var(--phosphor,#35f58a);color:var(--night,#0a0a1c)}.ds-switch>*:focus-visible{outline:2px solid var(--phosphor,#35f58a);outline-offset:3px}"
+    },
+    {
+      "name": "Skill Chips",
+      "kind": "chip",
+      "refersTo": "skill-chip",
+      "description": "Static grotesk chips on night with a phosphor-trace edge; hero skills and pillar stacks.",
+      "html": "<ul class=\"ds-chips\"><li>Verse · UEFN</li><li>Unreal Engine · C++</li><li>VR · AR · XR</li><li>Technical leadership</li></ul>",
+      "css": ".ds-chips{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:.45rem;max-width:36rem}.ds-chips li{padding:.35rem .7rem;font-family:var(--f-text,'Familjen Grotesk',system-ui,sans-serif);font-size:.875rem;font-weight:600;color:var(--silk,#ecebff);background:color-mix(in srgb,var(--night,#0a0a1c) 75%,transparent);border:1px solid color-mix(in srgb,var(--phosphor,#35f58a) 35%,var(--trace,#2a2a63))}"
+    },
+    {
+      "name": "Island Code Chip",
+      "kind": "chip",
+      "refersTo": "code-chip",
+      "description": "Copyable code in phosphor mono with a dashed outline that turns solid once copied.",
+      "html": "<button type=\"button\" class=\"ds-code\"><span>1234-5678-9012</span><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"square\"><path d=\"M9 9h10v10H9zM5 15V5h10\"/></svg></button>",
+      "css": ".ds-code{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--f-mono,'Martian Mono',ui-monospace,monospace);font-size:.75rem;font-weight:600;letter-spacing:.14em;color:var(--phosphor,#35f58a);padding:.45rem .7rem;background:none;border:1px dashed color-mix(in srgb,var(--phosphor,#35f58a) 55%,transparent);cursor:pointer;transition:background .2s cubic-bezier(.16,1,.3,1)}.ds-code:hover{background:color-mix(in srgb,var(--phosphor,#35f58a) 12%,transparent)}.ds-code:active{border-style:solid}.ds-code:focus-visible{outline:2px solid var(--phosphor,#35f58a);outline-offset:3px}"
+    },
+    {
+      "name": "Project Tile",
+      "kind": "card",
+      "refersTo": "project-tile",
+      "description": "Art-led work tile: media well with a play pad facade, silkscreen title, mute meta with a live dot, metric foot. Lifts and takes the tint on hover.",
+      "html": "<article class=\"ds-tile\" style=\"--tint:#ff4fa3\"><div class=\"ds-tile__media\"><div class=\"ds-tile__art\"></div><button type=\"button\" class=\"ds-play\" aria-label=\"Play video: Raptor Heist\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M7 4.5v15l12.5-7.5z\"/></svg></button></div><div class=\"ds-tile__body\"><h3 class=\"ds-tile__t\"><a href=\"#\">Raptor Heist</a></h3><p class=\"ds-tile__meta\"><span>Lead programmer</span><span aria-hidden=\"true\">·</span><span>2025</span><span class=\"ds-tile__live\">Live</span></p><div class=\"ds-tile__foot\"><span class=\"ds-tile__m\"><b>412M</b> minutes played</span></div></div></article>",
+      "css": ".ds-tile{position:relative;display:flex;flex-direction:column;max-width:24rem;background:var(--board,#12122b);border:1px solid var(--trace,#2a2a63);color:var(--silk,#ecebff);font-family:var(--f-text,'Familjen Grotesk',system-ui,sans-serif);transition:border-color .3s cubic-bezier(.16,1,.3,1),transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s cubic-bezier(.16,1,.3,1)}.ds-tile:hover,.ds-tile:focus-within{border-color:color-mix(in srgb,var(--tint) 70%,transparent);transform:translateY(-3px);box-shadow:0 24px 40px -24px rgb(0 0 0 / .9)}.ds-tile__media{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--night,#0a0a1c)}.ds-tile__art{position:absolute;inset:0;background:linear-gradient(135deg,#ff4fa3,#7b5cff 55%,#0a0a1c);transition:transform .8s cubic-bezier(.16,1,.3,1)}.ds-tile:hover .ds-tile__art{transform:scale(1.04)}.ds-play{position:absolute;z-index:1;left:50%;top:50%;width:4rem;height:4rem;translate:-50% -50%;display:grid;place-items:center;border:0;border-radius:50%;color:var(--night,#0a0a1c);background:var(--phosphor,#35f58a);box-shadow:0 0 0 8px color-mix(in srgb,var(--phosphor,#35f58a) 25%,transparent);cursor:pointer;transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s cubic-bezier(.16,1,.3,1)}.ds-play svg{width:1.5rem;height:1.5rem;margin-left:.15rem}.ds-play:hover{transform:scale(1.08);box-shadow:0 0 0 12px color-mix(in srgb,var(--phosphor,#35f58a) 30%,transparent)}.ds-play:focus-visible{outline:2px solid var(--phosphor,#35f58a);outline-offset:3px}.ds-tile__body{display:flex;flex-direction:column;gap:.45rem;padding:1.1rem 1.2rem 1.2rem}.ds-tile__t{margin:0;font-family:var(--f-display,'Big Shoulders Display','Arial Narrow',sans-serif);font-weight:800;font-size:1.85rem;line-height:1;letter-spacing:.01em;text-transform:uppercase}.ds-tile__t a{color:inherit;text-decoration:none}.ds-tile__t a::after{content:'';position:absolute;inset:0}.ds-tile__t a:focus-visible{outline:2px solid var(--phosphor,#35f58a);outline-offset:3px}.ds-tile__meta{margin:0;display:flex;flex-wrap:wrap;gap:.4rem;font-size:.9375rem;color:var(--mute,#a3a5c9)}.ds-tile__live{margin-left:.4rem;font-weight:600;color:var(--phosphor,#35f58a)}.ds-tile__live::before{content:'';display:inline-block;width:.45rem;height:.45rem;margin-right:.35rem;border-radius:50%;background:var(--phosphor,#35f58a)}.ds-tile__foot{padding-top:.6rem}.ds-tile__m{font-size:.9375rem;color:var(--mute,#a3a5c9)}.ds-tile__m b{font-family:var(--f-display,'Big Shoulders Display','Arial Narrow',sans-serif);font-weight:800;font-size:1.35rem;color:var(--silk,#ecebff)}"
+    },
+    {
+      "name": "Poster Tile",
+      "kind": "card",
+      "description": "Typographic fallback for a tile without art: tint dot grid and wash with the title in silkscreen 900.",
+      "html": "<div class=\"ds-poster\" style=\"--tint:#3d86ff\"><span>Hall of Mirrors</span></div>",
+      "css": ".ds-poster{position:relative;aspect-ratio:16/9;max-width:24rem;display:flex;align-items:flex-end;padding:1.25rem;border:1px solid var(--trace,#2a2a63);background:radial-gradient(circle at 1px 1px,color-mix(in srgb,var(--tint) 35%,transparent) 1px,transparent 1.5px) 0 0/18px 18px,linear-gradient(150deg,color-mix(in srgb,var(--tint) 22%,var(--night,#0a0a1c)),var(--night,#0a0a1c) 70%)}.ds-poster span{font-family:var(--f-display,'Big Shoulders Display','Arial Narrow',sans-serif);font-weight:900;font-size:2.6rem;line-height:.92;text-transform:uppercase;color:var(--silk,#ecebff)}"
+    },
+    {
+      "name": "Capability Pillar",
+      "kind": "custom",
+      "description": "Ruled row: a big figure in the tint of the chapter holding its evidence, then a silkscreen title, mute points with phosphor markers, and stack chips.",
+      "html": "<div class=\"ds-pillar\" style=\"--fig:#ff4fa3\"><div><b class=\"ds-pillar__n\">7+</b><span class=\"ds-pillar__u\">years building games and XR</span></div><div><h3 class=\"ds-pillar__t\">Game and XR engineering</h3><ul class=\"ds-pillar__pts\"><li>Shipped Fortnite islands in Verse and UEFN.</li><li>Led VR builds from prototype to release.</li></ul></div></div>",
+      "css": ".ds-pillar{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr);gap:2.5rem;padding:2.5rem 0;border-top:1px solid var(--trace,#2a2a63);border-bottom:1px solid var(--trace,#2a2a63);font-family:var(--f-text,'Familjen Grotesk',system-ui,sans-serif);color:var(--silk,#ecebff)}.ds-pillar__n{display:block;font-family:var(--f-display,'Big Shoulders Display','Arial Narrow',sans-serif);font-weight:900;font-size:6rem;line-height:.85;color:var(--fig)}.ds-pillar__u{display:block;margin-top:.6rem;font-size:1.05rem;color:var(--mute,#a3a5c9)}.ds-pillar__t{margin:0;font-family:var(--f-display,'Big Shoulders Display','Arial Narrow',sans-serif);font-weight:800;font-size:2.4rem;line-height:1;text-transform:uppercase}.ds-pillar__pts{margin:1rem 0 0;padding-left:1.1rem;display:grid;gap:.5rem;color:var(--mute,#a3a5c9)}.ds-pillar__pts li::marker{color:var(--phosphor,#35f58a)}"
+    },
+    {
+      "name": "Schematic Block",
+      "kind": "card",
+      "refersTo": "schematic-block",
+      "description": "MAP container: board fill, trace border, 2px top edge in its net color, mono designator in the heading.",
+      "html": "<div class=\"ds-blk\" style=\"--net:#3fe6d6\"><h3 class=\"ds-blk__h\"><span>S1</span> Teaching</h3><ul class=\"ds-rows\"><li><span>2024–now</span><span><b>Universidad del Cauca</b> · AI, architecture</span></li></ul></div>",
+      "css": ".ds-blk{padding:1.1rem 1.2rem 1.25rem;background:color-mix(in srgb,var(--board,#12122b) 92%,transparent);border:1px solid var(--trace,#2a2a63);border-top:2px solid var(--net);color:var(--silk,#ecebff);font-family:var(--f-text,'Familjen Grotesk',system-ui,sans-serif)}.ds-blk__h{display:flex;align-items:baseline;gap:.6rem;margin:0 0 .9rem;font-family:var(--f-display,'Big Shoulders Display','Arial Narrow',sans-serif);font-weight:700;font-size:1.25rem;letter-spacing:.04em;text-transform:uppercase}.ds-blk__h span{font-family:var(--f-mono,'Martian Mono',ui-monospace,monospace);font-size:.6875rem;letter-spacing:.08em;color:var(--net)}.ds-rows{list-style:none;margin:0;padding:0;font-size:.875rem}.ds-rows li{display:grid;grid-template-columns:5rem 1fr;gap:0 .6rem;align-items:baseline}.ds-rows li span:first-child{font-family:var(--f-mono,'Martian Mono',ui-monospace,monospace);font-size:.6875rem;letter-spacing:.08em;color:var(--faint,#6d6f99)}.ds-rows li span:last-child{color:var(--mute,#a3a5c9)}.ds-rows b{color:var(--silk,#ecebff);font-weight:600}"
+    },
+    {
+      "name": "Recognition Joint",
+      "kind": "custom",
+      "description": "Gold-ruled honor row: gold mono year, silkscreen title, gold grotesk result led by a solder bead; the only gold surface in the UI.",
+      "html": "<div class=\"ds-joint\"><span class=\"ds-joint__y\">2025</span><span class=\"ds-joint__w\">The Game Awards · Vote in Fortnite</span><span class=\"ds-joint__r\">Nominee</span><span class=\"ds-joint__f\">Raptor Heist</span></div>",
+      "css": ".ds-joint{display:grid;grid-template-columns:4.5rem minmax(0,2.4fr) 8rem minmax(0,1fr);gap:1rem 1.5rem;align-items:baseline;padding:1.35rem 0;border-top:1px solid color-mix(in srgb,var(--gold,#d9b45a) 40%,transparent);border-bottom:1px solid color-mix(in srgb,var(--gold,#d9b45a) 22%,transparent);color:var(--silk,#ecebff);font-family:var(--f-text,'Familjen Grotesk',system-ui,sans-serif)}.ds-joint__y{font-family:var(--f-mono,'Martian Mono',ui-monospace,monospace);font-size:.6875rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold,#d9b45a)}.ds-joint__w{font-family:var(--f-display,'Big Shoulders Display','Arial Narrow',sans-serif);font-weight:700;font-size:2rem;line-height:1;text-transform:uppercase}.ds-joint__r{font-weight:600;color:var(--gold,#d9b45a)}.ds-joint__r::before{content:'';display:inline-block;width:.55rem;height:.55rem;margin-right:.55rem;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff3c4,var(--gold,#d9b45a) 55%,#8a6a22)}.ds-joint__f{color:var(--mute,#a3a5c9)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Map and Territory",
+    "overview": "The site is a printed circuit board under a violet dream sky. In TERRITORY the board is a full-bleed WebGL landscape receding to a magenta horizon, lit by a low sun that throws long shadows; surreal iridescent objects (a knight, a door frame, a melted block, a lens, a copper mirror) stand on matte solder mask, and a hero chip stands on its edge with a lid that cycles through every shipped game. In MAP the same content lies flat as a schematic sheet: rectangular blocks joined by orthogonal nets on a dotted grid. Every surface belongs to one of those two readings, and the switch between them is the signature interaction.\n\nThe interface is printed on the board, not floated over it. The big legends are silkscreen: condensed, uppercase, heavy, used for the name, chapter titles, game titles, and the numbers that carry the argument. Everything a reader has to parse quickly (subheads, roles, buttons, switches, chips, captions) is a sturdy grotesk at 600. Data is set like reference designators, small but never below the legibility floor. Phosphor green is the live signal; ENIG gold appears only where something was recognized; the self-portrait spectrum is paint that marks chapters and art, never the voice of reading text. Density alternates by design: a calm stage where the camera holds on open 3D, then a dense, full-bleed panel of facts led by art.",
+    "keyCharacteristics": [
+      "Indigo-night solder mask with phosphor silkscreen; dark-only (`color-scheme: dark`).",
+      "Square geometry everywhere; circles only for pads, vias, status dots, and the round phosphor play pad.",
+      "Four typefaces with strict jobs: silkscreen display for legends and figures, a grotesk for reading and every control, a designator mono for data, a Didone italic for other voices.",
+      "Each chapter carries one spectrum tint, exposed as `--tint`, that colors its rail dot, heading underline bar, designators, and panel edge.",
+      "Shipped work is shown art-first in square-cornered tiles, with a typographic poster where no art exists.",
+      "Scroll drives a signal pulse along the board traces and a camera rail between stations.",
+      "WebGL is optional; MAP and a CSS poster carry the full content without it."
+    ],
+    "rules": [
+      {
+        "name": "The Gold Is Earned Rule",
+        "body": "Gold marks recognition (awards, nominations, medals) and nothing else. If an element is not an honor, it is not gold.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Signal Rule",
+        "body": "Phosphor is the only action and live-state color. A second CTA color does not exist; secondary actions are outlined pads in silk, and every play control is a phosphor pad.",
+        "section": "colors"
+      },
+      {
+        "name": "The Paint Not Voice Rule",
+        "body": "Spectrum colors are chapter tints and paint: rail dots, the 3.5rem heading bar, panel top edges, net lines, icons, tile hover edges, poster washes, pillar figures, small mono designators, short org labels, and the quotes' 25 to 30% tint mix. Reading text (body, leads, summaries, tile meta) is never set in a spectrum color.",
+        "section": "colors"
+      },
+      {
+        "name": "The Chapter Tint Rule",
+        "body": "A chapter sets exactly one `--tint`; all its chrome (rail dot, heading bar, panel edge, designators) derives from it. Content inside a chapter may borrow another chapter's tint only to point at that chapter's evidence, as the capability figures do.",
+        "section": "colors"
+      },
+      {
+        "name": "The Silkscreen Rule",
+        "body": "Big Shoulders Display is the printed legend, always uppercase: the name, chapter titles, game and tile titles, pillar figures and readout numerals, recognition rows, the brand, rail titles, and MAP block headings. Below that level (subheads, roles, buttons, switches, chips, captions) the voice is Familjen Grotesk 600. Condensed caps never carry a control or a mid-level heading.",
+        "section": "typography"
+      },
+      {
+        "name": "The Designator Rule",
+        "body": "Martian Mono is for designators, dates, and data only: refs, years, ranges, metric sources, island codes, table headers, the console. Never for sentences, headings, or labels a reader must parse as words.",
+        "section": "typography"
+      },
+      {
+        "name": "The Legibility Floor Rule",
+        "body": "Martian Mono never renders below 0.6875rem and always tracks at least 0.08em. If a designator does not fit at that size, it moves or wraps; it does not shrink.",
+        "section": "typography"
+      },
+      {
+        "name": "The Someone Else Speaking Rule",
+        "body": "Bodoni Moda italic is reserved for quotations and the titles of art works and studies (the gallery's wall-label voice). Never for UI or the owner's own copy.",
+        "section": "typography"
+      },
+      {
+        "name": "The Matte Versus Dream Rule",
+        "body": "The board and its components are matte; only surreal objects shine. Never make the board glossy or a dream object matte.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** structure each home chapter as stage then panel: heading over open 3D on a left night gradient, then a full-bleed night 95% panel with a 1px tint edge at 35%.",
+      "**Do** give every chapter exactly one spectrum `--tint` and derive its rail dot, heading bar, designators, and panel edge from it.",
+      "**Do** keep phosphor as the only action and live color, with one phosphor-filled primary per cluster and a phosphor play pad on every video.",
+      "**Do** reserve gold for recognition: awards, nominations, medals, and gold joints in 3D.",
+      "**Do** set the name, chapter titles, game titles, figures, and recognition rows in uppercase Big Shoulders Display; subheads, roles, buttons, switches, chips, and captions in Familjen Grotesk 600; reading text in Familjen Grotesk 400; designators and dates in Martian Mono at 0.6875rem or larger with 0.08em tracking; quotations and art titles in Bodoni Moda italic.",
+      "**Do** lead shipped work with its art in a square tile, and set a typographic poster when there is none.",
+      "**Do** load video as a facade and fetch the player only on click.",
+      "**Do** use square corners and 1px trace hairlines; circles only for pads, vias, status dots, and play pads.",
+      "**Do** keep 3D materials split: matte board and components, iridescent clearcoated dream objects, full-metal gold and copper.",
+      "**Do** ship a MAP equivalent for every TERRITORY addition, and freeze world motion under reduced motion."
+    ],
+    "donts": [
+      "**Don't** set reading text (body, leads, summaries, tile meta) in a spectrum color; spectrum is paint, tints, figures, and small designators.",
+      "**Don't** use gold for anything that is not an honor.",
+      "**Don't** add a second accent for actions, or a filled button in any color other than phosphor.",
+      "**Don't** round container, tile, button, chip, or image corners.",
+      "**Don't** set controls or mid-level headings in condensed Big Shoulders caps.",
+      "**Don't** set Martian Mono below 0.6875rem, or use it for sentences, headings, or labels read as words; don't set UI in Bodoni Moda.",
+      "**Don't** put text directly on busy 3D without the night reading gradient or a night field behind it.",
+      "**Don't** move surreal objects quickly; world motion stays slow and damped, and glitch stays on the lid.",
+      "**Don't** make the board glossy or iridescent; only dream objects shine."
+    ]
+  }
+}

@@ -1,0 +1,78 @@
+import type { Project } from '../types';
+
+const projects: Project[] = [
+  {
+    slug: 'big-bang-cash',
+    title: 'Big Bang Cash',
+    group: 'web',
+    role: { en: 'Full stack developer · Product Owner · Scrum Master', es: 'Desarrollador full stack · Product Owner · Scrum Master' },
+    studio: 'Like Photo USA',
+    year: '2021',
+    status: 'archive',
+    platforms: ['iOS', 'Android'],
+    stack: ['React Native Expo', 'Firebase', 'React', 'Node.js'],
+    summary: {
+      en: 'A real-time mobile trivia game with live streaming and integrated payments, keeping game state synchronized across concurrent players.',
+      es: 'Un juego de trivia móvil en tiempo real con transmisión en vivo y pagos integrados, con el estado sincronizado entre jugadores simultáneos.',
+    },
+    cover: '/img/projects/bigbang.webp',
+    links: [{ label: { en: 'Project files', es: 'Archivos del proyecto' }, url: 'https://drive.google.com/drive/folders/1xh_Vm-9WqR41I_l8yzo4nfmPPqnJAUub?usp=sharing' }],
+    order: 30,
+  },
+  {
+    slug: 'klk-msn',
+    title: 'KlK Msn',
+    group: 'web',
+    role: { en: 'Full stack developer · Scrum Master', es: 'Desarrollador full stack · Scrum Master' },
+    studio: 'Like Marketing USA',
+    year: '2021',
+    status: 'archive',
+    platforms: ['iOS', 'Android'],
+    stack: ['React Native Expo', 'Firebase', 'React', 'Node.js'],
+    summary: {
+      en: 'A complete social media platform for a radio community in Puerto Rico, built end to end.',
+      es: 'Una plataforma social completa para una comunidad radial de Puerto Rico, construida de principio a fin.',
+    },
+    cover: '/img/projects/klk.webp',
+    links: [{ label: { en: 'Project files', es: 'Archivos del proyecto' }, url: 'https://drive.google.com/drive/folders/1xZO89t8s_2zQiFUuz2DRkkE7D2Gf1nmL?usp=sharing' }],
+    order: 31,
+  },
+  {
+    slug: 'lets-goal',
+    title: 'Let’s Goal',
+    group: 'web',
+    role: { en: 'Full stack developer', es: 'Desarrollador full stack' },
+    studio: 'Independent',
+    year: '2020',
+    status: 'archive',
+    platforms: ['iOS', 'Android'],
+    stack: ['React Native Expo', 'Firebase', 'Node.js', 'React'],
+    summary: {
+      en: 'A marketplace for renting synthetic soccer fields in Colombia: bookings, scheduling and team coordination.',
+      es: 'Un marketplace para alquilar canchas sintéticas en Colombia: reservas, horarios y coordinación de equipos.',
+    },
+    cover: '/img/projects/letsgoal.webp',
+    links: [{ label: { en: 'Project video', es: 'Video del proyecto' }, url: 'https://www.youtube.com/watch?v=C3h_PTBC0GE' }],
+    order: 32,
+  },
+  {
+    slug: 'repara',
+    title: 'Repara',
+    group: 'web',
+    role: { en: 'Full stack developer', es: 'Desarrollador full stack' },
+    studio: 'Alcaldía de Pasto',
+    year: '2021',
+    status: 'archive',
+    platforms: ['Android'],
+    stack: ['React Native Expo', 'Firebase', 'Maps'],
+    summary: {
+      en: 'A civic app on Google Play for citizens to report damage in their city. I built about 40% of it: maps, request management and accounts.',
+      es: 'Una app cívica en Google Play para que la ciudadanía reporte daños en la ciudad. Construí cerca del 40%: mapas, gestión de solicitudes y cuentas.',
+    },
+    cover: '/img/projects/repara.webp',
+    links: [{ label: { en: 'Project video', es: 'Video del proyecto' }, url: 'https://www.youtube.com/watch?v=UG0ygIOVqiE' }],
+    order: 33,
+  },
+];
+
+export default projects;

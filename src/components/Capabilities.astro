@@ -1,0 +1,410 @@
+---
+import { projects } from '../data/projects';
+import { pillars, bom } from '../data/career';
+import { profile, path } from '../data/site';
+import { sm } from '../data/img';
+import type { Lang } from '../data/types';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const L = (v: { en: string; es: string }) => v[lang];
+const T = (en: string, es: string) => (lang === 'en' ? en : es);
+const tints = ['var(--phosphor)', 'var(--magenta)', 'var(--cyan)', '#7aa8ff'];
+
+// Which projects use each part of the stack: the proof behind every skill.
+const uses = (part: string) => {
+  const tokens = part.toLowerCase().split(/\s*[/·]\s*/);
+  return projects.filter((p) =>
+    [...p.stack, ...p.platforms].some((s) => {
+      const x = s.toLowerCase();
+      return tokens.some((t) => x === t || x.includes(t) || (t.length > 4 && t.includes(x)));
+    }),
+  );
+};
+const parts = bom.map((b) => ({ ...b, items: b.items.map((name) => ({ name, n: uses(name).length })) }));
+const usedIn = Object.fromEntries(
+  bom.flatMap((b) => b.items).map((name) => [name, uses(name).map((p) => ({ t: p.title, h: path(lang, `/work/${p.slug}/`), c: p.cover ? sm(p.cover) : '' }))]),
+);
+const first = 'Verse';
+---
+<div class="cap">
+  <!-- Pinout: four capability banks wired to one chip -->
+  <div class="pinout">
+    {pillars.map((p, i) => (
+      <article class:list={['bank', `bank--${i}`]} style={`--tint:${tints[i]}`}>
+        <p class="bank__figure"><b>{p.figure}</b><span>{L(p.unit)}</span></p>
+        <h3>{L(p.title)}</h3>
+        <p class="bank__line">{L(p.points[0])}</p>
+        <ul class="bank__pins">
+          {p.stack.map((s) => <li>{s}</li>)}
+        </ul>
+      </article>
+    ))}
+    <div class="core" aria-hidden="true">
+      <span class="core__notch"></span>
+      <span class="core__ref">AOB-2026</span>
+      <span class="core__name">{profile.short}</span>
+      <span class="core__role">Lead Programmer<br />XR Tech Lead</span>
+      <span class="core__pins core__pins--l"></span>
+      <span class="core__pins core__pins--r"></span>
+    </div>
+  </div>
+
+  <!-- Stack: pick a part, see the projects built with it -->
+  <div class="stack" data-stack>
+    <div class="stack__parts">
+      <h3 class="stack__h">{T('Stack', 'Stack')} <span>{T('Pick a part to see where I used it', 'Elige una parte para ver dónde la usé')}</span></h3>
+      {parts.map((b) => (
+        <div class="stack__row">
+          <p class="stack__group"><span class="mono">{b.ref}</span>{L(b.group)}</p>
+          <ul>
+            {b.items.map((it) => (
+              <li>
+                {it.n > 0 ? (
+                  <button type="button" data-part={it.name} aria-pressed={it.name === first ? 'true' : 'false'}>{it.name}<span class="mono">{it.n}</span></button>
+                ) : (
+                  <span class="stack__idle">{it.name}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+    <aside class="stack__used" aria-live="polite">
+      <p class="stack__label">{T('Used in', 'Usado en')}</p>
+      <p class="stack__part" data-part-name>{first}</p>
+      <div class="stack__grid" data-part-grid></div>
+    </aside>
+    <script type="application/json" data-part-json set:html={JSON.stringify(usedIn)} />
+  </div>
+</div>
+
+<style>
+  .cap {
+    max-width: 84rem;
+  }
+  /* ---------- Pinout ---------- */
+  .pinout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 15rem minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    gap: 1.25rem clamp(1.5rem, 3vw, 3rem);
+    align-items: stretch;
+  }
+  .core {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    position: relative;
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: 0.5rem;
+    padding: 2rem 1rem;
+    text-align: center;
+    background:
+      radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--phosphor) 22%, transparent) 1px, transparent 1.5px) 0 0 / 14px 14px,
+      #0d0d22;
+    border: 1px solid var(--trace);
+    box-shadow: 0 0 60px -20px color-mix(in srgb, var(--phosphor) 55%, transparent), 0 30px 50px -30px #000;
+  }
+  .core__notch {
+    position: absolute;
+    top: 0.7rem;
+    left: 0.7rem;
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    border: 1px solid var(--phosphor);
+  }
+  .core__ref {
+    font-family: var(--f-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.1em;
+    color: var(--phosphor);
+  }
+  .core__name {
+    font-family: var(--f-display);
+    font-weight: 900;
+    font-size: 2rem;
+    line-height: 0.9;
+    text-transform: uppercase;
+  }
+  .core__role {
+    font-size: 0.875rem;
+    color: var(--mute);
+  }
+  .core__pins {
+    position: absolute;
+    top: 1.5rem;
+    bottom: 1.5rem;
+    width: 0.7rem;
+    background: repeating-linear-gradient(180deg, var(--gold) 0 0.5rem, transparent 0.5rem 1.2rem);
+  }
+  .core__pins--l {
+    left: -0.7rem;
+  }
+  .core__pins--r {
+    right: -0.7rem;
+  }
+  .bank {
+    position: relative;
+    padding: 1.25rem 1.4rem 1.4rem;
+    background: color-mix(in srgb, var(--board) 85%, transparent);
+    border: 1px solid var(--trace);
+    transition: border-color 0.3s var(--ease);
+  }
+  .bank:hover {
+    border-color: var(--tint);
+  }
+  /* trace from each bank to the chip */
+  .bank::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: clamp(1.5rem, 3vw, 3rem);
+    height: 2px;
+    background: var(--tint);
+    box-shadow: 0 0 10px var(--tint);
+  }
+  .bank--0,
+  .bank--2 {
+    grid-column: 1;
+    border-right: 2px solid var(--tint);
+  }
+  .bank--0::after,
+  .bank--2::after {
+    left: 100%;
+  }
+  .bank--1,
+  .bank--3 {
+    grid-column: 3;
+    border-left: 2px solid var(--tint);
+  }
+  .bank--1::after,
+  .bank--3::after {
+    right: 100%;
+  }
+  .bank--0,
+  .bank--1 {
+    grid-row: 1;
+  }
+  .bank--2,
+  .bank--3 {
+    grid-row: 2;
+  }
+  .bank__figure {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+  .bank__figure b {
+    font-family: var(--f-display);
+    font-weight: 900;
+    font-size: clamp(3rem, 2rem + 3vw, 4.75rem);
+    line-height: 0.85;
+    color: var(--tint);
+  }
+  .bank__figure span {
+    color: var(--mute);
+  }
+  .bank h3 {
+    margin-top: 0.75rem;
+    font-family: var(--f-text);
+    font-weight: 600;
+    font-size: 1.3rem;
+    line-height: 1.2;
+    text-transform: none;
+    letter-spacing: -0.01em;
+  }
+  .bank__line {
+    margin-top: 0.4rem;
+    color: var(--mute);
+    font-size: 0.9375rem;
+  }
+  .bank__pins,
+  .stack__row ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+  .bank__pins {
+    margin-top: 0.9rem;
+  }
+  .bank__pins li {
+    padding: 0.2rem 0.55rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    border: 1px solid color-mix(in srgb, var(--tint) 45%, var(--trace));
+  }
+
+  /* ---------- Stack ---------- */
+  .stack {
+    margin-top: clamp(3rem, 6vw, 4.5rem);
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+  .stack__h {
+    font-family: var(--f-text);
+    font-weight: 600;
+    font-size: 1.375rem;
+    text-transform: none;
+    letter-spacing: -0.005em;
+    line-height: 1.25;
+    margin-bottom: 1rem;
+  }
+  .stack__h span {
+    margin-left: 0.6rem;
+    font-weight: 400;
+    font-size: 0.9375rem;
+    color: var(--mute);
+  }
+  .stack__row {
+    display: grid;
+    grid-template-columns: 10.5rem minmax(0, 1fr);
+    gap: 0.5rem 1rem;
+    padding: 0.8rem 0;
+    border-top: 1px solid var(--trace);
+  }
+  .stack__group {
+    font-weight: 600;
+  }
+  .stack__group .mono {
+    display: inline-block;
+    width: 2rem;
+    color: var(--phosphor);
+  }
+  .stack__row button,
+  .stack__idle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 2rem;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.875rem;
+    border: 1px solid var(--trace);
+  }
+  .stack__idle {
+    color: var(--faint);
+    border-style: dashed;
+  }
+  .stack__row button {
+    font-weight: 600;
+    border-color: color-mix(in srgb, var(--phosphor) 35%, var(--trace));
+    transition: background 0.2s var(--ease), color 0.2s var(--ease);
+  }
+  .stack__row button .mono {
+    opacity: 0.7;
+  }
+  .stack__row button:hover {
+    background: color-mix(in srgb, var(--phosphor) 15%, transparent);
+  }
+  .stack__row button[aria-pressed='true'] {
+    color: var(--night);
+    background: var(--phosphor);
+    border-color: var(--phosphor);
+  }
+  .stack__used {
+    position: sticky;
+    top: calc(var(--header) + 1.5rem);
+    padding: 1.25rem;
+    background: color-mix(in srgb, var(--board) 85%, transparent);
+    border: 1px solid var(--trace);
+    min-height: 22rem;
+  }
+  .stack__label {
+    font-size: 0.875rem;
+    color: var(--mute);
+  }
+  .stack__part {
+    font-family: var(--f-display);
+    font-weight: 900;
+    font-size: 2.5rem;
+    line-height: 1;
+    text-transform: uppercase;
+    color: var(--phosphor);
+  }
+  .stack__grid {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
+  }
+  .stack__grid :global(a) {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--night);
+    border: 1px solid var(--trace);
+    text-decoration: none;
+    animation: pop 0.4s var(--ease) both;
+  }
+  @keyframes pop {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+  .stack__grid :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .stack__grid :global(span) {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 1.2rem 0.5rem 0.4rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--silk);
+    background: linear-gradient(transparent, rgb(10 10 28 / 0.92) 55%);
+  }
+  .stack__grid :global(a:hover) {
+    border-color: var(--phosphor);
+  }
+
+  @media (max-width: 1000px) {
+    .pinout {
+      grid-template-columns: 1fr 1fr;
+    }
+    .core {
+      display: none;
+    }
+    .bank,
+    .bank--1,
+    .bank--3 {
+      grid-column: auto;
+      grid-row: auto;
+      border-left: 2px solid var(--tint);
+      border-right: 1px solid var(--trace);
+    }
+    .bank::after {
+      display: none;
+    }
+    .stack {
+      grid-template-columns: 1fr;
+    }
+    .stack__used {
+      position: static;
+      min-height: 0;
+    }
+  }
+  @media (max-width: 640px) {
+    .pinout {
+      grid-template-columns: 1fr;
+    }
+    .stack__row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

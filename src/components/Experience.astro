@@ -1,0 +1,161 @@
+---
+import { experience, logoFor, imageFor } from '../data/career';
+import { useUI } from '../data/site';
+import type { Lang } from '../data/types';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const tr = useUI(lang);
+const L = (v: { en: string; es: string }) => v[lang];
+const range = (from: string, to: string | null) => {
+  const y = (s: string) => s.slice(0, 4);
+  if (!to) return `${y(from)} — ${tr('now')}`;
+  return y(from) === y(to) ? y(from) : `${y(from)} — ${y(to)}`;
+};
+---
+<div class="xp">
+  <canvas class="xp__spine" data-study="soft-time" aria-hidden="true"></canvas>
+  <ol class="xp__list">
+    {experience.map((r) => {
+      const logo = logoFor(r.org);
+      const img = imageFor(r.org);
+      return (
+        <li class:list={['job', { 'job--now': !r.to, 'job--img': img }]}>
+          <span class="job__logo">{logo ? <img src={logo} alt={r.org} width="192" height="192" loading="lazy" decoding="async" /> : <span>{r.org.slice(0, 2)}</span>}</span>
+          <div class="job__body">
+            <h3>{L(r.title)}</h3>
+            <p class="job__org">{r.org}<span> · {r.place}</span></p>
+            <p class="job__when">{range(r.from, r.to)}</p>
+            <p class="job__text">{L(r.text)}</p>
+          </div>
+          {img && <span class="job__img"><img src={img} alt="" loading="lazy" decoding="async" /></span>}
+        </li>
+      );
+    })}
+  </ol>
+</div>
+
+<style>
+  .xp {
+    position: relative;
+    max-width: 84rem;
+    padding-left: 3.5rem;
+  }
+  .xp__spine {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3rem;
+    height: 100%;
+  }
+  .xp__list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+  .job {
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    gap: 1.25rem;
+    align-items: start;
+    padding: 1.25rem;
+    background: color-mix(in srgb, var(--board) 80%, transparent);
+    border: 1px solid var(--trace);
+    transition: border-color 0.3s var(--ease);
+  }
+  .job--img {
+    grid-template-columns: 4.5rem minmax(0, 1fr) minmax(0, 17rem);
+  }
+  .job:hover {
+    border-color: var(--violet);
+  }
+  .job--now {
+    border-color: color-mix(in srgb, var(--phosphor) 55%, var(--trace));
+  }
+  .job__logo {
+    display: grid;
+    place-items: center;
+    width: 4.5rem;
+    height: 4.5rem;
+    overflow: hidden;
+    background: #fff;
+    color: var(--night);
+    font-weight: 600;
+  }
+  .job__logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .job h3 {
+    font-family: var(--f-text);
+    font-weight: 600;
+    font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.6rem);
+    line-height: 1.2;
+    text-transform: none;
+    letter-spacing: -0.01em;
+  }
+  .job__org {
+    margin-top: 0.25rem;
+    font-weight: 600;
+  }
+  .job__org span {
+    font-weight: 400;
+    color: var(--mute);
+  }
+  .job__when {
+    margin-top: 0.2rem;
+    font-family: var(--f-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    color: #b6a4ff;
+  }
+  .job--now .job__when {
+    color: var(--phosphor);
+  }
+  .job__text {
+    margin-top: 0.6rem;
+    color: var(--mute);
+    max-width: 44rem;
+  }
+  .job__img {
+    display: block;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border: 1px solid var(--trace);
+    align-self: center;
+  }
+  .job__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.9);
+    transition: transform 0.8s var(--ease), filter 0.5s;
+  }
+  .job:hover .job__img img {
+    transform: scale(1.05);
+    filter: saturate(1.15);
+  }
+  @media (max-width: 800px) {
+    .xp {
+      padding-left: 0;
+    }
+    .xp__spine {
+      display: none;
+    }
+    .job,
+    .job--img {
+      grid-template-columns: 3.5rem minmax(0, 1fr);
+    }
+    .job__logo {
+      width: 3.5rem;
+      height: 3.5rem;
+    }
+    .job__img {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

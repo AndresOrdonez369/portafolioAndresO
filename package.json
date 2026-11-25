@@ -1,0 +1,26 @@
+{
+  "name": "andres-ordonez-portfolio",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "assets": "node scripts/prepare-assets.mjs"
+  },
+  "dependencies": {
+    "@fontsource/big-shoulders-display": "^5.3.0",
+    "@fontsource/bodoni-moda": "^5.3.0",
+    "@fontsource/familjen-grotesk": "^5.3.0",
+    "@fontsource/martian-mono": "^5.3.0",
+    "astro": "^7.4.11",
+    "gsap": "^3.15.1",
+    "three": "^0.187.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.187.0",
+    "sharp": "^0.35.5",
+    "typescript": "^7.0.2"
+  }
+}

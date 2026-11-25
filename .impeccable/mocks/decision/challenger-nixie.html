@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Tube Bank</title>
+<link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;700&family=Martian+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0}
+body{width:1440px;height:900px;overflow:hidden;background:#060807;color:#d7e2dc;font-family:"Martian Mono",monospace;position:relative;
+ background-image:repeating-linear-gradient(90deg,#0a0d0c 0 2px,transparent 2px 6px)}
+.top{position:absolute;left:56px;right:56px;top:38px;display:flex;justify-content:space-between;font-size:12px;letter-spacing:3px;color:#9aa7a0}
+.top b{color:#d7e2dc}
+.bank{position:absolute;left:56px;right:56px;top:120px;height:430px;background:#0b0f0d;border:1px solid #1c2420;padding:34px 38px;display:flex;gap:14px;align-items:stretch}
+.tube{flex:1;border-radius:60px 60px 14px 14px;background:linear-gradient(180deg,#141b18,#0a0e0c);border:1px solid #26302b;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.tube:before{content:"";position:absolute;inset:8px 10px;border-radius:50px 50px 8px 8px;background:repeating-linear-gradient(0deg,#ffffff06 0 1px,transparent 1px 7px),repeating-linear-gradient(90deg,#ffffff06 0 1px,transparent 1px 7px)}
+.tube b{font:300 230px/1 "Oxanium";color:#46ffb0;text-shadow:0 0 26px #46ffb0,0 0 70px #46ffb099;position:relative}
+.tube.off b{color:#1a2520;text-shadow:none}
+.sep{flex:0 0 18px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:70px}
+.sep i{width:12px;height:12px;border-radius:50%;background:#46ffb0;box-shadow:0 0 16px #46ffb0}
+.legend{position:absolute;left:56px;right:56px;top:566px;display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid #1c2420;padding-bottom:16px}
+.legend h1{font:700 64px/1 "Oxanium";letter-spacing:8px;text-transform:uppercase;color:#d7e2dc}
+.legend span{font-size:13px;letter-spacing:4px;color:#9aa7a0}
+.row{position:absolute;left:56px;right:56px;top:690px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.mini{background:#0b0f0d;border:1px solid #1c2420;padding:20px 22px}
+.mini b{display:block;font:300 76px/1 "Oxanium";color:#46ffb0;text-shadow:0 0 18px #46ffb088}
+.mini i{display:block;font:normal 11px "Martian Mono";letter-spacing:3px;color:#9aa7a0;margin-top:10px}
+</style></head><body>
+<div class="top"><span><b>ANDRÉS ORDÓÑEZ-BOLAÑOS</b> · LEAD PROGRAMMER · XR TECH LEAD</span><span>COUNTERS · EXPERIENCE · TEACHING · RESEARCH · CONTACT</span></div>
+<div class="bank">
+ <div class="tube"><b>5</b></div><div class="tube"><b>6</b></div><div class="tube"><b>5</b></div>
+ <div class="sep"><i></i></div>
+ <div class="tube"><b>1</b></div><div class="tube"><b>0</b></div><div class="tube"><b>0</b></div>
+ <div class="sep"><i></i></div>
+ <div class="tube"><b>0</b></div><div class="tube"><b>0</b></div><div class="tube"><b>0</b></div>
+</div>
+<div class="legend"><h1>Steal an Egg</h1><span>MINUTES PLAYED · FORTNITE.GG · LEAD PROGRAMMER, TERAVISION GAMES</span></div>
+<div class="row">
+ <div class="mini"><b>156.5M</b><i>RAPTOR HEIST · MINUTES</i></div>
+ <div class="mini"><b>318K</b><i>STEAL AN EGG · FAVORITES</i></div>
+ <div class="mini"><b>15</b><i>ENGINEERS LED</i></div>
+ <div class="mini"><b>05</b><i>PEER-REVIEWED PAPERS</i></div>
+</div>
+</body></html>

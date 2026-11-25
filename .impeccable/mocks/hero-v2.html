@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Hero v2 — Signal Path · Map and Territory (boceto)</title>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Martian+Mono:wght@400;600&family=Bodoni+Moda:ital,wght@1,500&display=swap" rel="stylesheet">
+<style>
+:root{--night:#0a0a1c;--board:#12122b;--dim:#23235a;--ph:#35f58a;--gold:#d9b45a;--vio:#6c4de0;--mag:#ff4fa3;--cy:#3fe6d6;--bl:#2f7dff;--or:#ff5f2e;--ye:#f2e23a;--silk:#ecebff;--mute:#9a9cc0;
+--iri:linear-gradient(115deg,#6c4de0,#ff4fa3 22%,#ff5f2e 40%,#f2e23a 55%,#35f58a 70%,#3fe6d6 84%,#2f7dff)}
+*{box-sizing:border-box;margin:0}
+body{width:1440px;height:900px;overflow:hidden;background:var(--night);color:var(--silk);font-family:"Martian Mono",monospace;position:relative}
+/* sky + horizon */
+.sky{position:absolute;left:0;right:0;top:0;height:400px;background:
+ radial-gradient(900px 260px at 62% 100%,#ff4fa355,transparent 70%),
+ radial-gradient(1200px 380px at 40% 100%,#6c4de066,transparent 72%),
+ linear-gradient(#0a0a1c 30%,#17143a)}
+.horizon{position:absolute;left:0;right:0;top:399px;height:2px;background:linear-gradient(90deg,transparent,#ff4fa3 30%,#f2e23a 55%,#3fe6d6 80%,transparent);opacity:.8}
+/* board plane */
+.stage{position:absolute;left:0;right:0;top:400px;bottom:0;perspective:900px;perspective-origin:50% 0;overflow:hidden}
+.plane{position:absolute;left:-600px;right:-600px;top:0;height:1500px;transform:rotateX(64deg);transform-origin:50% 0;
+ background:
+  radial-gradient(circle at 3px 3px,#2b2b6a 2px,transparent 3px) 0 0/60px 60px,
+  linear-gradient(#12122b,#0a0a1c 70%)}
+.tr{position:absolute;background:var(--dim);border-radius:4px}
+.tr.hot{background:var(--ph);box-shadow:0 0 24px var(--ph)}
+.pad{position:absolute;width:26px;height:26px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 6px #0a0a1c}
+/* upright things */
+.chip{position:absolute;left:640px;top:462px;width:400px;height:250px;background:#0d0d22;border:2px solid #2b2b6a;box-shadow:0 0 90px #35f58a33}
+.chip .lid{position:absolute;inset:14px;background:linear-gradient(135deg,#1b6a40,#0b2a1a 40%,#ff2f7a 41%,#ff8a2a 68%,#16163a 69%);display:flex;align-items:flex-end;padding:16px}
+.chip .lid b{font:900 66px/.86 "Big Shoulders Display";text-transform:uppercase;text-shadow:0 4px 0 #000}
+.chip .pins{position:absolute;left:18px;right:18px;bottom:-14px;height:14px;background:repeating-linear-gradient(90deg,var(--gold) 0 12px,transparent 12px 30px)}
+.chip:after{content:"";position:absolute;left:30px;right:-220px;bottom:-70px;height:54px;background:linear-gradient(90deg,#000a,transparent);transform:skewX(-58deg);filter:blur(6px)}
+.ref{position:absolute;left:640px;top:434px;font-size:12px;letter-spacing:3px;color:var(--ph)}
+.door{position:absolute;left:1200px;top:250px;width:120px;height:210px;border:10px solid transparent;border-image:var(--iri) 1;background:linear-gradient(#2f7dff,#3fe6d6 55%,#f2e23a)}
+.door:after{content:"";position:absolute;left:0;right:-260px;bottom:-62px;height:44px;background:linear-gradient(90deg,#000a,transparent);transform:skewX(-60deg);filter:blur(6px)}
+.knight{position:absolute;left:300px;top:452px;width:120px;height:170px}
+.knight:after{content:"";position:absolute;left:10px;right:-200px;bottom:-34px;height:40px;background:linear-gradient(90deg,#000a,transparent);transform:skewX(-60deg);filter:blur(6px)}
+/* melted trace */
+.melt{position:absolute;left:0;bottom:0;width:1440px;height:150px;pointer-events:none}
+/* type */
+.name{position:absolute;left:96px;top:92px;z-index:4}
+.name h1{font:900 150px/.8 "Big Shoulders Display";text-transform:uppercase;color:var(--ph);letter-spacing:-2px}
+.name p{margin-top:22px;font-size:14px;letter-spacing:3px}
+.top{position:absolute;right:56px;top:44px;display:flex;gap:16px;align-items:center;font-size:12px;letter-spacing:2px;z-index:5}
+.sw{display:flex;border:1px solid #3a3a7a}.sw span{padding:11px 16px;color:var(--mute)}.sw .on{background:var(--ph);color:var(--night);font-weight:600}
+.cta{background:var(--silk);color:var(--night);padding:12px 18px;font-weight:600}
+.rail{position:absolute;left:28px;top:96px;display:flex;flex-direction:column;gap:17px;font-size:11px;letter-spacing:2px;color:var(--mute);z-index:5}
+.rail span{display:flex;align-items:center;gap:8px}.rail i{width:8px;height:8px;border-radius:50%;display:block}
+.rail .on{color:var(--ph)}
+.tp{position:absolute;z-index:4;background:#0a0a1ce6;border:1px solid #2b2b6a;padding:14px 18px}
+.tp i{display:block;font:normal 11px "Martian Mono";letter-spacing:2px;color:var(--mute);margin-bottom:8px}
+.tp b{font:700 58px/1 "Big Shoulders Display";letter-spacing:1px}
+.tp.g{border-color:var(--gold)}.tp.g i,.tp.g b{color:var(--gold)}
+.quote{position:absolute;right:56px;top:150px;width:330px;text-align:right;font:italic 500 26px/1.25 "Bodoni Moda";z-index:4}
+.quote small{display:block;margin-top:12px;font:normal 11px "Martian Mono";letter-spacing:3px;color:var(--mute)}
+.foot{position:absolute;left:96px;bottom:26px;font-size:11px;letter-spacing:3px;color:var(--mute);z-index:6}
+.foot b{color:var(--ph)}
+</style></head><body>
+<div class="sky"></div><div class="horizon"></div>
+<div class="stage"><div class="plane">
+ <div class="tr hot" style="left:1050px;top:0;width:8px;height:560px"></div>
+ <div class="tr hot" style="left:1050px;top:556px;width:420px;height:8px"></div>
+ <div class="tr" style="left:1470px;top:300px;width:8px;height:900px"></div>
+ <div class="tr" style="left:1470px;top:300px;width:520px;height:8px"></div>
+ <div class="tr" style="left:760px;top:760px;width:1100px;height:8px"></div>
+ <div class="tr" style="left:1700px;top:120px;width:8px;height:640px"></div>
+ <div class="pad" style="left:1041px;top:540px"></div><div class="pad" style="left:1461px;top:290px"></div><div class="pad" style="left:1691px;top:750px"></div><div class="pad" style="left:1976px;top:290px"></div>
+</div></div>
+<div class="ref">U1 · LEAD PROGRAMMER · UEFN / VERSE</div>
+<div class="chip"><div class="lid"><b>Raptor<br>Heist</b></div><div class="pins"></div></div>
+<div class="door"></div>
+<svg class="knight" viewBox="0 0 120 170"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6c4de0"/><stop offset=".3" stop-color="#ff4fa3"/><stop offset=".55" stop-color="#f2e23a"/><stop offset=".8" stop-color="#3fe6d6"/><stop offset="1" stop-color="#2f7dff"/></linearGradient></defs>
+ <path fill="url(#g)" d="M30 150h70v18H20v-18zM34 148c0-34 30-40 26-66-14 8-26 16-38 12l-8-12 26-30 6-22 14 12c26 6 44 30 44 62 0 20-6 34-10 44z"/></svg>
+<svg class="melt" viewBox="0 0 1440 150"><defs><linearGradient id="m" x1="0" x2="1"><stop offset="0" stop-color="#6c4de0"/><stop offset=".2" stop-color="#ff4fa3"/><stop offset=".4" stop-color="#ff5f2e"/><stop offset=".55" stop-color="#f2e23a"/><stop offset=".7" stop-color="#35f58a"/><stop offset=".85" stop-color="#3fe6d6"/><stop offset="1" stop-color="#2f7dff"/></linearGradient></defs>
+ <path fill="url(#m)" d="M470 0h520v10c-6 22-14 40-14 70s-18 44-22 20-8-70-22-80c-10 30-4 96-22 110s-24-60-34-100c-12 16-6 60-22 66s-16-40-28-66c-16 24-6 110-28 118s-22-80-36-118c-10 20-4 50-18 54s-16-30-26-54c-14 16-10 90-30 96s-20-70-34-96c-10 18-8 36-20 36s-18-24-26-36c-12 12-10 30-22 30s-22-28-36-50z"/></svg>
+<div class="rail"><span class="on"><i style="background:#35f58a"></i>00 BOOT</span><span><i style="background:#ff4fa3"></i>01 SIMULACRA</span><span><i style="background:#d9b45a"></i>02 RECOGNITION</span><span><i style="background:#6c4de0"></i>03 TIME</span><span><i style="background:#3fe6d6"></i>04 SEEING</span><span><i style="background:#2f7dff"></i>05 THE VIRTUAL</span><span><i style="background:#ff5f2e"></i>06 BECOMING</span><span><i style="background:#35f58a"></i>07 MIRROR</span></div>
+<div class="name" style="left:230px"><h1>Andrés<br>Ordóñez</h1><p>LEAD PROGRAMMER · XR TECH LEAD · MSc COMPUTER SCIENCE</p></div>
+<div class="top"><div class="sw"><span>MAP</span><span class="on">TERRITORY</span></div><div class="sw"><span class="on">EN</span><span>ES</span></div><span class="cta">CONTACT</span></div>
+<div class="quote">“The simulacrum is true.”<small>— JEAN BAUDRILLARD</small></div>
+<div class="tp" style="left:1090px;top:520px"><i>TP1 · MINUTES PLAYED · STEAL AN EGG</i><b>565.1M</b></div>
+<div class="tp" style="left:1090px;top:650px"><i>TP2 · MINUTES PLAYED · RAPTOR HEIST</i><b>156.5M</b></div>
+<div class="tp g" style="left:230px;top:690px"><i>TP3 · THE GAME AWARDS: VOTE IN FORTNITE 2025</i><b>NOMINEE</b></div>
+<div class="foot"><b>J1</b> PASTO, COLOMBIA · SCROLL TO FOLLOW THE SIGNAL ↓</div>
+</body></html>

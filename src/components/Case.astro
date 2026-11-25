@@ -1,0 +1,578 @@
+---
+import Icon from './Icon.astro';
+import { useUI, statusLabel, path } from '../data/site';
+import { projects } from '../data/projects';
+import { sm } from '../data/img';
+import type { Lang, Project } from '../data/types';
+
+interface Props {
+  lang: Lang;
+  p: Project;
+}
+const { lang, p } = Astro.props;
+const tr = useUI(lang);
+const L = (v: { en: string; es: string }) => v[lang];
+const T = (en: string, es: string) => (lang === 'en' ? en : es);
+const i = projects.indexOf(p);
+const prev = projects[(i - 1 + projects.length) % projects.length];
+const next = projects[(i + 1) % projects.length];
+const tint = p.group === 'industry' ? 'var(--magenta)' : p.group === 'xr-art' ? 'var(--blue)' : 'var(--violet)';
+const shots = [...(p.cover ? [p.cover] : []), ...(p.gallery ?? [])];
+const video = p.videos?.[0];
+const moreVideos = p.videos?.slice(1) ?? [];
+---
+<article class="case" style={`--tint:${tint}`}>
+  <a class="case__back" href={path(lang, '/') + '#simulacra'}><Icon name="arrow" class="flip" />{T('All projects', 'Todos los proyectos')}</a>
+
+  <header class="case__head">
+    <div class="case__intro">
+      <h1>{p.title}</h1>
+      <p class="case__meta">
+        {p.ref && <span class="mono ref">{p.ref}</span>}
+        <span>{L(p.role)}</span>
+        <span class="status" data-status={p.status}>{statusLabel(p.status, lang)}</span>
+        <span>{p.released ?? p.year}</span>
+      </p>
+      <p class="case__sum">{L(p.summary)}</p>
+      <div class="case__actions">
+        {p.islandCode && (
+          <button type="button" class="code" data-copy={p.islandCode} aria-label={`${tr('island')} ${p.islandCode} — ${tr('copy')}`}><span>{p.islandCode}</span><Icon name="copy" /></button>
+        )}
+        {p.links?.map((l) => (
+          <a class="btn" href={l.url} target="_blank" rel="noopener">{L(l.label)}<Icon name="out" /></a>
+        ))}
+      </div>
+    </div>
+
+    <div class:list={['stage', { 'stage--v': video?.vertical || (p.portrait && !video) }]}>
+      {video ? (
+        <>
+          <img src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`} alt="" style={`view-transition-name:art-${p.slug}`} />
+          <button type="button" class="stage__play" data-video={video.id} aria-label={`${T('Play video', 'Reproducir video')}: ${p.title}`}><Icon name="play" /></button>
+        </>
+      ) : p.cover ? (
+        <img src={p.cover} alt={p.title} fetchpriority="high" style={`view-transition-name:art-${p.slug}`} />
+      ) : (
+        <div class="stage__poster" aria-hidden="true"><span>{p.title}</span></div>
+      )}
+      <span class="stage__corner stage__corner--a" aria-hidden="true"></span>
+      <span class="stage__corner stage__corner--b" aria-hidden="true"></span>
+    </div>
+  </header>
+
+  {(p.metrics || p.awards) && (
+    <section class="results" aria-label={T('Results', 'Resultados')}>
+      <h2 class="sub">{T('Results', 'Resultados')}</h2>
+      {p.metrics && (
+        <div class="readouts">
+          {p.metrics.map((m) => (
+            <p class="readout"><b>{m.value}</b><span>{L(m.label)}</span></p>
+          ))}
+        </div>
+      )}
+      {p.metrics && <p class="results__src">{tr('source')}: {p.metrics[0].source}, {p.metrics[0].asOf}</p>}
+      {p.awards && (
+        <ul class="case__awards">
+          {p.awards.map((a) => (
+            <li>{a.url ? <a href={a.url} target="_blank" rel="noopener">{L(a.name)}</a> : L(a.name)} <span class="mono">{a.year}</span></li>
+          ))}
+        </ul>
+      )}
+    </section>
+  )}
+
+  <div class="case__grid">
+    <dl class="spec">
+      <div><dt>{tr('role')}</dt><dd>{L(p.role)}</dd></div>
+      <div><dt>{tr('studio')}</dt><dd>{p.studio}</dd></div>
+      <div><dt>{T('Released', 'Lanzamiento')}</dt><dd>{p.released ?? p.year}</dd></div>
+      <div><dt>{tr('platform')}</dt><dd>{p.platforms.join(' · ')}</dd></div>
+      <div><dt>{tr('stack')}</dt><dd><ul class="tags">{p.stack.map((s) => <li>{s}</li>)}</ul></dd></div>
+    </dl>
+    <div class="case__body">
+      {p.did && (
+        <section>
+          <h2 class="sub sub--first">{tr('whatIDid')}</h2>
+          <ul class="did">
+            {p.did.map((d) => <li>{L(d)}</li>)}
+          </ul>
+        </section>
+      )}
+      {p.credits && (
+        <section>
+          <h2 class="sub">{tr('team')}</h2>
+          <p class="credits">{p.credits.join(' · ')}</p>
+        </section>
+      )}
+    </div>
+  </div>
+
+  {(shots.length > 0 || moreVideos.length > 0) && (
+    <section class="shots" aria-label={T('Gallery', 'Galería')}>
+      <h2 class="sub">{T('Gallery', 'Galería')} <span class="mono">{shots.length + moreVideos.length}</span></h2>
+      <div class="shots__grid">
+        {moreVideos.map((v) => (
+          <div class:list={['shot', 'shot--video', { 'shot--v': v.vertical }]}>
+            <img src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`} alt="" loading="lazy" />
+            <button type="button" class="stage__play" data-video={v.id} aria-label={`${T('Play video', 'Reproducir video')}: ${v.title}`}><Icon name="play" /></button>
+          </div>
+        ))}
+        {shots.map((g, n) => (
+          <button type="button" class="shot" data-lightbox={g} aria-label={`${T('Open image', 'Abrir imagen')} ${n + 1} / ${shots.length}`}>
+            <img src={sm(g)} alt={`${p.title} — ${n + 1}`} loading="lazy" decoding="async" />
+          </button>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <nav class="case__nav" aria-label={T('More projects', 'Más proyectos')}>
+    <a href={path(lang, `/work/${prev.slug}/`)} class="case__nav-a"><Icon name="arrow" class="flip" /><span><small>{T('Previous', 'Anterior')}</small>{prev.title}</span></a>
+    <a href={path(lang, `/work/${next.slug}/`)} class="case__nav-a case__nav-a--next"><span><small>{tr('next')}</small>{next.title}</span><Icon name="arrow" /></a>
+  </nav>
+</article>
+
+<dialog class="lb" id="lightbox" aria-label={T('Image viewer', 'Visor de imágenes')}>
+  <img alt="" />
+  <p class="lb__count mono"></p>
+  <button type="button" class="lb__btn lb__prev" data-lb="prev" aria-label={T('Previous image', 'Imagen anterior')}><Icon name="arrow" class="flip" /></button>
+  <button type="button" class="lb__btn lb__next" data-lb="next" aria-label={T('Next image', 'Imagen siguiente')}><Icon name="arrow" /></button>
+  <button type="button" class="lb__btn lb__close" data-lb="close">{T('Close', 'Cerrar')}</button>
+</dialog>
+
+<style>
+  .case {
+    padding: calc(var(--header) + 2rem) var(--gutter) 4rem;
+    max-width: 90rem;
+    margin: 0 auto;
+    background-image: radial-gradient(circle, color-mix(in srgb, var(--trace) 55%, transparent) 1px, transparent 1.5px);
+    background-size: 24px 24px;
+  }
+  .case :global(.flip),
+  .lb :global(.flip) {
+    transform: scaleX(-1);
+  }
+  .case__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--mute);
+    text-decoration: none;
+  }
+  .case__head {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.25fr);
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: center;
+  }
+  h1 {
+    font-size: clamp(2.75rem, 1.6rem + 4.2vw, 5.5rem);
+  }
+  h1::after {
+    content: '';
+    display: block;
+    width: 3.5rem;
+    height: 3px;
+    margin-top: 1.25rem;
+    background: var(--tint);
+  }
+  .case__meta {
+    margin-top: 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+    align-items: baseline;
+    color: var(--mute);
+  }
+  .ref {
+    color: var(--tint);
+    filter: brightness(1.2);
+  }
+  .status[data-status='live'] {
+    font-weight: 600;
+    color: var(--phosphor);
+  }
+  .case__sum {
+    margin-top: 1.25rem;
+    max-width: 38rem;
+    font-size: clamp(1.1rem, 1rem + 0.4vw, 1.35rem);
+    line-height: 1.5;
+  }
+  .case__actions {
+    margin-top: 1.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  /* The stage: the project's main image or video, framed like a viewport */
+  .stage {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: var(--night);
+    border: 1px solid var(--trace);
+    box-shadow: 0 50px 90px -50px rgb(0 0 0 / 0.95), 0 0 80px -30px color-mix(in srgb, var(--tint) 60%, transparent);
+  }
+  .stage--v {
+    aspect-ratio: 9 / 14;
+    max-width: 24rem;
+    justify-self: center;
+    width: 100%;
+  }
+  .stage img,
+  .stage :global(iframe),
+  .shot--video :global(iframe) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 0;
+  }
+  .stage__poster {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    padding: 2rem;
+    background:
+      radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--tint) 35%, transparent) 1px, transparent 1.5px) 0 0 / 22px 22px,
+      linear-gradient(150deg, color-mix(in srgb, var(--tint) 26%, var(--night)), var(--night) 70%);
+  }
+  .stage__poster span {
+    font-family: var(--f-display);
+    font-weight: 900;
+    font-size: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
+    line-height: 0.9;
+    text-transform: uppercase;
+  }
+  .stage__corner {
+    position: absolute;
+    width: 1.5rem;
+    height: 1.5rem;
+    pointer-events: none;
+    border: 2px solid var(--phosphor);
+  }
+  .stage__corner--a {
+    left: -0.5rem;
+    top: -0.5rem;
+    border-right: 0;
+    border-bottom: 0;
+  }
+  .stage__corner--b {
+    right: -0.5rem;
+    bottom: -0.5rem;
+    border-left: 0;
+    border-top: 0;
+  }
+  .stage__play {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    width: 5rem;
+    height: 5rem;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: var(--night);
+    background: var(--phosphor);
+    box-shadow: 0 0 0 10px color-mix(in srgb, var(--phosphor) 25%, transparent);
+    transition: transform 0.3s var(--ease);
+  }
+  .stage__play:hover {
+    transform: scale(1.08);
+  }
+  .stage__play :global(svg) {
+    width: 1.8rem;
+    height: 1.8rem;
+    fill: currentColor;
+    margin-left: 0.2rem;
+  }
+
+  .sub {
+    font-family: var(--f-text);
+    font-weight: 600;
+    font-size: 1.375rem;
+    line-height: 1.25;
+    letter-spacing: -0.005em;
+    text-transform: none;
+    margin: 0 0 1.1rem;
+  }
+  .sub .mono {
+    margin-left: 0.5rem;
+    color: var(--faint);
+  }
+  section + section > .sub {
+    margin-top: 2.5rem;
+  }
+  .results,
+  .shots,
+  .case__grid {
+    margin-top: clamp(3rem, 7vw, 5rem);
+    padding-top: 2rem;
+    border-top: 1px solid var(--trace);
+  }
+  .readouts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem clamp(2rem, 6vw, 5rem);
+  }
+  .readout {
+    display: grid;
+  }
+  .readout b {
+    font-family: var(--f-display);
+    font-weight: 900;
+    font-size: clamp(3.5rem, 2.2rem + 4.5vw, 6rem);
+    line-height: 0.9;
+    font-variant-numeric: tabular-nums;
+    color: var(--phosphor);
+  }
+  .readout span {
+    margin-top: 0.4rem;
+    font-size: 1.05rem;
+    color: var(--mute);
+  }
+  .results__src {
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: var(--faint);
+  }
+  .case__awards {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.5rem;
+    display: grid;
+    gap: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gold);
+  }
+  .case__awards a {
+    text-decoration: none;
+  }
+  .case__awards .mono {
+    margin-left: 0.5rem;
+    font-weight: 400;
+  }
+  .case__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+  .spec {
+    display: grid;
+    align-content: start;
+  }
+  .spec div {
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--trace);
+  }
+  .spec div:first-child {
+    padding-top: 0;
+  }
+  .spec dt {
+    font-size: 0.875rem;
+    color: var(--faint);
+  }
+  .spec dd {
+    margin: 0.25rem 0 0;
+    font-weight: 600;
+  }
+  .tags {
+    list-style: none;
+    padding: 0;
+    margin-top: 0.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+  .tags li {
+    padding: 0.2rem 0.55rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    border: 1px solid color-mix(in srgb, var(--phosphor) 35%, var(--trace));
+  }
+  .did {
+    padding-left: 1.1rem;
+    display: grid;
+    gap: 0.7rem;
+    max-width: 44rem;
+    font-size: 1.1rem;
+  }
+  .did li::marker {
+    color: var(--phosphor);
+  }
+  .credits {
+    color: var(--mute);
+    max-width: 44rem;
+  }
+
+  /* Gallery */
+  .shots__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+    gap: 1rem;
+  }
+  .shot {
+    position: relative;
+    display: block;
+    padding: 0;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--night);
+    border: 1px solid var(--trace);
+    cursor: zoom-in;
+    transition: border-color 0.25s var(--ease);
+  }
+  .shot--video {
+    cursor: default;
+  }
+  .shot img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s var(--ease);
+  }
+  .shot:hover {
+    border-color: var(--phosphor);
+  }
+  .shot:hover img {
+    transform: scale(1.04);
+  }
+
+  .case__nav {
+    margin-top: clamp(3rem, 7vw, 5rem);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--trace);
+    border-bottom: 1px solid var(--trace);
+  }
+  .case__nav-a {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.75rem 0;
+    text-decoration: none;
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: clamp(1.25rem, 1rem + 1.2vw, 2.1rem);
+    line-height: 1;
+    text-transform: uppercase;
+  }
+  .case__nav-a--next {
+    justify-content: flex-end;
+    text-align: right;
+    border-left: 1px solid var(--trace);
+    padding-left: 1rem;
+  }
+  .case__nav-a small {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-family: var(--f-text);
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: none;
+    color: var(--mute);
+  }
+  .case__nav-a :global(svg) {
+    width: 1.75rem;
+    height: 1.75rem;
+    flex: none;
+    transition: translate 0.3s var(--ease);
+  }
+  .case__nav-a--next:hover :global(svg) {
+    translate: 0.4rem 0;
+  }
+  .case__nav-a:not(.case__nav-a--next):hover :global(svg) {
+    translate: -0.4rem 0;
+  }
+
+  /* Lightbox */
+  .lb {
+    width: 100vw;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: color-mix(in srgb, var(--night) 96%, transparent);
+    color: var(--silk);
+  }
+  .lb[open] {
+    display: grid;
+    place-items: center;
+  }
+  .lb::backdrop {
+    background: var(--night);
+  }
+  .lb img {
+    max-width: 92vw;
+    max-height: 82dvh;
+    min-width: min(92vw, 44rem);
+    object-fit: contain;
+    border: 1px solid var(--trace);
+  }
+  .lb__count {
+    position: absolute;
+    left: 50%;
+    bottom: 1.5rem;
+    translate: -50% 0;
+    color: var(--mute);
+  }
+  .lb__btn {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    min-width: 3rem;
+    min-height: 3rem;
+    padding: 0 0.9rem;
+    font-weight: 600;
+    color: var(--silk);
+    background: var(--board);
+    border: 1px solid var(--trace);
+  }
+  .lb__btn:hover {
+    color: var(--night);
+    background: var(--phosphor);
+  }
+  .lb__btn :global(svg) {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  .lb__prev {
+    left: 1rem;
+    top: 50%;
+  }
+  .lb__next {
+    right: 1rem;
+    top: 50%;
+  }
+  .lb__close {
+    right: 1rem;
+    top: 1rem;
+  }
+
+  @media (max-width: 900px) {
+    .case__head,
+    .case__grid {
+      grid-template-columns: 1fr;
+    }
+    .case__nav {
+      grid-template-columns: 1fr;
+    }
+    .case__nav-a--next {
+      border-left: 0;
+      border-top: 1px solid var(--trace);
+      padding-left: 0;
+    }
+  }
+</style>

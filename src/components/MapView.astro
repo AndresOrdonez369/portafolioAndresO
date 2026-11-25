@@ -1,0 +1,359 @@
+---
+import Icon from './Icon.astro';
+import { profile, useUI, path } from '../data/site';
+import { industry, xrArt } from '../data/projects';
+import { experience, teaching, education, publications, bom } from '../data/career';
+import type { Lang } from '../data/types';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const tr = useUI(lang);
+const L = (v: { en: string; es: string }) => v[lang];
+const y = (s: string | null) => (s ? s.slice(0, 4) : tr('now'));
+const T = {
+  games: lang === 'en' ? 'Shipped games' : 'Juegos lanzados',
+  rec: lang === 'en' ? 'Recognition' : 'Reconocimiento',
+  exp: lang === 'en' ? 'Experience' : 'Experiencia',
+  teach: lang === 'en' ? 'Teaching' : 'Docencia',
+  res: lang === 'en' ? 'Research' : 'Investigación',
+  edu: lang === 'en' ? 'Education' : 'Formación',
+  xr: lang === 'en' ? 'XR and art' : 'XR y arte',
+  bom: 'BOM',
+  print: lang === 'en' ? 'Print' : 'Imprimir',
+  note: lang === 'en' ? 'Schematic view — the whole board on one sheet.' : 'Vista esquemática — toda la placa en una hoja.',
+};
+---
+<section class="map" id="map" aria-label={tr('map')}>
+  <svg class="map__nets" aria-hidden="true"></svg>
+  <div class="map__sheet">
+    <div class="blk blk--id" data-net="id" style="--net:var(--phosphor)">
+      <h2 class="map__name">{profile.name}</h2>
+      <p class="map__role">{L(profile.role)}</p>
+      <p class="map__origin mono">J1 · {profile.origin}</p>
+      <p class="map__intro">{L(profile.intro)}</p>
+      <div class="map__links">
+        <a class="btn btn--primary" href={`mailto:${profile.email}`}><Icon name="mail" />{profile.email}</a>
+        <a class="btn" href={profile.linkedin} target="_blank" rel="noopener"><Icon name="linkedin" />LinkedIn</a>
+        <a class="btn" href={profile.cv} download><Icon name="download" />{tr('downloadCv')}</a>
+        <button class="btn" type="button" data-print>{T.print}</button>
+      </div>
+    </div>
+
+    <div class="blk blk--games" data-net="games" data-net-from="id" style="--net:var(--magenta)">
+      <h3 class="blk__h"><span class="mono">U1–U8</span> {T.games}</h3>
+      <ul class="rows">
+        {industry.map((p) => (
+          <li>
+            <span class="mono">{p.ref}</span>
+            <a href={path(lang, `/work/${p.slug}/`)}>{p.title}</a>
+            <span class="rows__aux">{L(p.role)} · {p.year}{p.metrics ? ` · ${p.metrics[0].value} ${L(p.metrics[0].label)}` : ''}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="blk blk--rec" data-net="rec" data-net-from="games" style="--net:var(--gold)">
+      <h3 class="blk__h"><span class="mono">G1</span> {T.rec}</h3>
+      <ul class="rows rows--tight">
+        <li><span class="mono">2025</span><span>The Game Awards · Vote in Fortnite — Raptor Heist</span></li>
+        <li><span class="mono">2024</span><span>The Game Awards · Fortnite Islands — Havoc Hotel 2</span></li>
+        <li><span class="mono">2026</span><span>Best Use of Verse, UEFN Community Awards — Raptor Heist</span></li>
+        <li><span class="mono">2024</span><span>{lang === 'en' ? 'Francisco José de Caldas Medal' : 'Medalla Francisco José de Caldas'}</span></li>
+        <li><span class="mono">2024</span><span>{lang === 'en' ? '1,000 Leaders for Colombia' : '1.000 Líderes por Colombia'}</span></li>
+      </ul>
+    </div>
+
+    <div class="blk blk--exp" data-net="exp" data-net-from="id" style="--net:var(--violet)">
+      <h3 class="blk__h"><span class="mono">T1</span> {T.exp}</h3>
+      <ul class="rows rows--tight">
+        {experience.slice(0, 8).map((r) => (
+          <li><span class="mono">{y(r.from)}–{y(r.to)}</span><span><b>{L(r.title)}</b> · {r.org}</span></li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="blk blk--teach" data-net="teach" data-net-from="exp" style="--net:var(--cyan)">
+      <h3 class="blk__h"><span class="mono">S1</span> {T.teach}</h3>
+      <ul class="rows rows--tight">
+        {teaching.slice(0, 6).map((t) => (
+          <li><span class="mono">{y(t.from)}–{y(t.to)}</span><span><b>{t.org}</b> · {L(t.courses)}</span></li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="blk blk--res" data-net="res" data-net-from="teach" style="--net:var(--blue)">
+      <h3 class="blk__h"><span class="mono">R1</span> {T.res}</h3>
+      <ul class="rows rows--tight">
+        {publications.map((p) => (
+          <li><span class="mono">{p.year}</span><a href={p.url} target="_blank" rel="noopener">{p.venue}</a></li>
+        ))}
+      </ul>
+      <h4 class="blk__h blk__h--sub map__xr">{T.xr}</h4>
+      <p class="map__xrlist">{xrArt.map((p) => p.title).join(' · ')}</p>
+    </div>
+
+    <div class="blk blk--edu" data-net="edu" data-net-from="id" style="--net:var(--orange)">
+      <h3 class="blk__h"><span class="mono">E1</span> {T.edu}</h3>
+      <ul class="rows rows--tight">
+        {education.map((e) => (
+          <li><span class="mono">{e.years.slice(-4)}</span><span><b>{L(e.degree)}</b> · {e.org}</span></li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="blk blk--bom" data-net="bom" data-net-from="edu" style="--net:var(--phosphor)">
+      <h3 class="blk__h"><span class="mono">BOM</span> {lang === 'en' ? 'Bill of materials' : 'Lista de materiales'}</h3>
+      <ul class="rows rows--tight">
+        {bom.slice(0, 6).map((b) => (
+          <li><span class="mono">{b.ref}</span><span>{b.items.slice(0, 5).join(' · ')}</span></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+  <p class="map__note mono">{T.note}</p>
+</section>
+
+<style>
+  .map {
+    display: none;
+    position: relative;
+    z-index: 3;
+    min-height: 100svh;
+    padding: calc(var(--header) + 2rem) var(--gutter) 3rem;
+    background-color: var(--night);
+    background-image: radial-gradient(circle, color-mix(in srgb, var(--trace) 70%, transparent) 1px, transparent 1.5px);
+    background-size: 24px 24px;
+  }
+  :global(html[data-view='map']) .map {
+    display: block;
+  }
+  .map__nets {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: visible;
+  }
+  .map__nets :global(path) {
+    fill: none;
+    stroke-width: 1.5;
+    stroke-dasharray: var(--len);
+    stroke-dashoffset: var(--len);
+    animation: draw 1.4s var(--ease) forwards;
+  }
+  .map__nets :global(circle) {
+    stroke: none;
+  }
+  @keyframes draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  .map__sheet {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: clamp(1.25rem, 2.2vw, 2.25rem);
+    max-width: 96rem;
+    margin: 0 auto;
+  }
+  .blk {
+    position: relative;
+    padding: 1.1rem 1.2rem 1.25rem;
+    background: color-mix(in srgb, var(--board) 92%, transparent);
+    border: 1px solid var(--trace);
+    border-top: 2px solid var(--net);
+    animation: rise 0.7s var(--ease) both;
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+  }
+  .blk--id {
+    grid-column: span 5;
+    animation-delay: 0.05s;
+  }
+  .blk--games {
+    grid-column: span 4;
+    animation-delay: 0.12s;
+  }
+  .blk--rec {
+    grid-column: span 3;
+    animation-delay: 0.18s;
+  }
+  .blk--exp {
+    grid-column: span 4;
+    animation-delay: 0.24s;
+  }
+  .blk--teach {
+    grid-column: span 4;
+    animation-delay: 0.3s;
+  }
+  .blk--res {
+    grid-column: span 4;
+    animation-delay: 0.36s;
+  }
+  .blk--edu {
+    grid-column: span 5;
+    animation-delay: 0.42s;
+  }
+  .blk--bom {
+    grid-column: span 7;
+    animation-delay: 0.48s;
+  }
+  .blk__h {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin-bottom: 0.9rem;
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: 0.04em;
+    color: var(--silk);
+  }
+  .blk__h .mono {
+    font-size: 0.6875rem;
+    color: var(--net);
+  }
+  .blk__h--sub {
+    font-size: 1rem;
+    color: var(--mute);
+  }
+  .map__origin {
+    margin-top: 0.5rem;
+    font-size: 0.6875rem;
+    color: var(--phosphor);
+  }
+  .map__name {
+    font-size: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
+    color: var(--phosphor);
+  }
+  .map__role {
+    margin-top: 0.75rem;
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .map__intro {
+    margin-top: 0.75rem;
+    color: var(--mute);
+    font-size: 0.9375rem;
+    max-width: 36rem;
+  }
+  .map__links {
+    margin-top: 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .map__links .btn {
+    min-height: 2.5rem;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.875rem;
+  }
+  .rows {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.55rem;
+    font-size: 0.875rem;
+  }
+  .rows li {
+    display: grid;
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+    gap: 0 0.6rem;
+    align-items: baseline;
+  }
+  .rows--tight li {
+    grid-template-columns: 4.6rem minmax(0, 1fr);
+  }
+  .rows .mono {
+    font-size: 0.6875rem;
+    color: var(--faint);
+  }
+  .rows a {
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: 1.15rem;
+    line-height: 1.05;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  .rows--tight a {
+    font-family: var(--f-text);
+    font-size: 0.875rem;
+    font-weight: 400;
+    text-transform: none;
+  }
+  .rows__aux {
+    grid-column: 2;
+    color: var(--mute);
+    font-size: 0.8125rem;
+  }
+  .rows--tight span:last-child {
+    color: var(--mute);
+  }
+  .rows--tight b {
+    color: var(--silk);
+    font-weight: 600;
+  }
+  .map__xr {
+    margin-top: 1.1rem;
+  }
+  .map__xrlist {
+    font-size: 0.8125rem;
+    color: var(--mute);
+  }
+  .map__note {
+    max-width: 96rem;
+    margin: 1.5rem auto 0;
+    font-size: 0.6875rem;
+    color: var(--faint);
+  }
+  @media (max-width: 1100px) {
+    .blk--id,
+    .blk--games,
+    .blk--rec,
+    .blk--exp,
+    .blk--teach,
+    .blk--res,
+    .blk--edu,
+    .blk--bom {
+      grid-column: span 6;
+    }
+  }
+  @media (max-width: 700px) {
+    .map__sheet > .blk {
+      grid-column: 1 / -1;
+    }
+    .map__nets {
+      display: none;
+    }
+  }
+  @media print {
+    .map {
+      display: block !important;
+      background: #fff;
+      color: #000;
+      padding: 0;
+    }
+    .blk {
+      background: #fff;
+      border-color: #999;
+      break-inside: avoid;
+      animation: none;
+    }
+    .map__links,
+    .map__nets {
+      display: none;
+    }
+  }
+</style>
